@@ -1,0 +1,84 @@
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import CartDrawer from "@/components/CartDrawer";
+import ProductCard from "@/components/ProductCard";
+
+const CATEGORIES = [
+  { key: "all", label: "All Products" },
+  { key: "car", label: "Car Care" },
+  { key: "bike", label: "Bike Care" },
+  { key: "interior", label: "Interior" },
+];
+
+export default function Products() {
+  const [products, setProducts] = useState([]);
+  const [cat, setCat] = useState("all");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    api.get("/products").then((r) => {
+      console.log("PRODUCT API:", r.data);
+      setProducts(r.data);
+    });
+  }, []);
+
+  const filtered = products
+    .filter((p) => cat === "all" || p.category === cat)
+    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <Navbar />
+      <CartDrawer />
+
+      <section className="border-b border-border bg-secondary">
+        <div className="container mx-auto px-4 md:px-8 py-12">
+          <div className="label-tech text-brand-orange mb-2">Full Catalog</div>
+          <h1 className="font-heading text-4xl md:text-6xl font-black uppercase tracking-tight">Products</h1>
+          <p className="mt-3 text-muted-foreground max-w-2xl">Browse our complete range of automotive care chemicals. Select your variant and add to cart for instant wholesale pricing.</p>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 md:px-8 py-10 flex-1">
+        <div className="flex flex-wrap items-center gap-3 mb-8 justify-between">
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map((c) => (
+              <button
+                key={c.key}
+                data-testid={`filter-${c.key}`}
+                onClick={() => setCat(c.key)}
+                className={`label-tech rounded-sm border px-4 py-2 transition-all ${cat === c.key
+                    ? "bg-brand-jet text-white border-brand-jet"
+                    : "bg-white text-brand-jet border-border hover:border-brand-jet"
+                  }`}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+          <input
+            data-testid="product-search-input"
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="rounded-sm border border-border px-4 py-2 text-sm w-full sm:w-72 focus:outline-none focus:border-brand-jet"
+          />
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filtered.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+        {filtered.length === 0 && (
+          <div className="py-20 text-center text-muted-foreground">No products match your filters.</div>
+        )}
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
