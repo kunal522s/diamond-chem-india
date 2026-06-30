@@ -11,6 +11,9 @@ import uuid
 import jwt
 import bcrypt
 from datetime import datetime, timezone, timedelta
+from fastapi import UploadFile, File
+from fastapi.staticfiles import StaticFiles
+import shutil
 
 
 ROOT_DIR = Path(__file__).parent
@@ -27,6 +30,7 @@ ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
 app = FastAPI()
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 api_router = APIRouter(prefix="/api")
 
 # ---------- Models ----------
@@ -37,11 +41,30 @@ class Variant(BaseModel):
 class Product(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
-    category: str  # car, bike, interior, etc.
+    category: str
     description: str
     image: str
     variants: List[Variant]
     featured: bool = False
+
+
+class ProductCreate(BaseModel):
+    name: str
+    category: str
+    description: str
+    image: str
+    variants: List[Variant]
+    featured: bool = False
+
+
+class ProductUpdate(BaseModel):
+    name: str
+    category: str
+    description: str
+    image: str
+    variants: List[Variant]
+    featured: bool = False
+    
 
 class OrderItem(BaseModel):
     product_id: str
@@ -96,131 +119,6 @@ def verify_admin(authorization: Optional[str] = Header(None)):
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
-# ---------- Seed Products ----------
-SEED_PRODUCTS = [
-    {
-        "name": "Premium Dashboard Polish",
-        "category": "interior",
-        "description": "High-gloss silicone-based dashboard polish that restores shine and protects against UV damage. Long-lasting formula for showroom finish.",
-        "image": "/images/dashboard-polish.jpg",
-        "variants": [{"size": "500ml", "price": 180}, {"size": "2L", "price": 650}, {"size": "5L", "price": 1500}],
-        "featured": True,
-    },
-    {
-        "name": "Heavy Duty Tyre Polish",
-        "category": "car",
-        "description": "Industrial-strength tyre shine that delivers deep black gloss and rubber protection. Water-resistant, ideal for fleet and dealer use.",
-        "image": "/images/tyre-shiner.jpg",
-        "variants": [{"size": "500ml", "price": 220}, {"size": "2L", "price": 800}, {"size": "5L", "price": 1850}],
-        "featured": True,
-    },
-    {
-        "name": "Diamond Car Polish",
-        "category": "car",
-        "description": "Premium cutting compound polish that removes swirl marks and oxidation. Restores paint clarity with showroom-grade results.",
-        "image": "/images/car-bike-polish.jpg",
-        "variants": [{"size": "500ml", "price": 350}, {"size": "2L", "price": 1250}, {"size": "5L", "price": 2900}],
-        "featured": True,
-    },
-   {
-    "name": "Super Clean Detergent",
-    "category": "Detergent",
-    "description": "Premium washing machine detergent formulated to remove tough stains, dirt and odours from clothes. Provides deep cleaning, fabric care and a long-lasting fresh fragrance while being suitable for both top-load and front-load washing machines.",
-    "image": "/images/super-clean-detergent.jpg",
-    "variants": [
-        {"size": "500ml", "price": 200},
-        {"size": "2L", "price": 720},
-        {"size": "5L", "price": 1650}
-    ],
-    "featured": True,
-},
-    {
-    "name": "Spray Polish",
-    "category": "car",
-    "description": "Premium spray polish that delivers instant shine and long-lasting protection for car and bike surfaces. Enhances gloss, repels dust, and leaves a smooth, streak-free finish.",
-    "image": "/images/spray-polish.jpg",
-    "variants": [
-        {"size": "500ml", "price": 240},
-        {"size": "2L", "price": 880},
-        {"size": "5L", "price": 2050}
-    ],
-    "featured": False,
-},
-    {
-    "name": "Throttle Body Cleaner",
-    "category": "car",
-    "description": "Professional throttle body cleaner that quickly removes carbon deposits, oil residue and dirt from throttle bodies, carburetors and air intake systems. Restores smooth throttle response, improves engine performance and enhances fuel efficiency.",
-    "image": "/images/throttle-body-cleaner.jpg",
-    "variants": [
-        {"size": "500ml", "price": 280},
-        {"size": "2L", "price": 1020},
-        {"size": "5L", "price": 2380}
-    ],
-    "featured": False,
-},
-    {
-        "name": "Engine Degreaser",
-        "category": "car",
-        "description": "Heavy-duty engine bay degreaser. Cuts through grease, oil and grime in seconds. Safe on all engine surfaces.",
-        "image": "https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg",
-        "variants": [{"size": "500ml", "price": 280}, {"size": "2L", "price": 1020}, {"size": "5L", "price": 2380}],
-        "featured": False,
-    },
-    {
-        "name": "Leather Conditioner",
-        "category": "interior",
-        "description": "Nutrient-rich leather conditioner that softens, protects and restores natural leather. Prevents cracking and fading.",
-        "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg",
-        "variants": [{"size": "500ml", "price": 380}, {"size": "2L", "price": 1380}, {"size": "5L", "price": 3200}],
-        "featured": False,
-    },
-    {
-    "name": "Product 1",
-    "category": "car",
-    "description": "Premium quality product designed for professional use. Delivers reliable performance, long-lasting protection and excellent results for everyday applications.",
-    "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg",
-    "variants": [{"size": "500ml", "price": 380}, {"size": "2L", "price": 1380}, {"size": "5L", "price": 3200}],
-    "featured": False,
-},
-{
-    "name": "Product 2",
-    "category": "interior",
-    "description": "High-performance cleaning and protection solution suitable for multiple surfaces. Easy to use and provides a professional-quality finish.",
-    "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg",
-    "variants": [{"size": "500ml", "price": 380}, {"size": "2L", "price": 1380}, {"size": "5L", "price": 3200}],
-    "featured": False,
-},
-{
-    "name": "Product 3",
-    "category": "car",
-    "description": "Advanced formula developed for effective cleaning, protection and long-lasting shine. Ideal for regular maintenance and professional applications.",
-    "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg",
-    "variants": [{"size": "500ml", "price": 380}, {"size": "2L", "price": 1380}, {"size": "5L", "price": 3200}],
-    "featured": False,
-},
-{
-    "name": "Product 4",
-    "category": "bike",
-    "description": "Professional-grade product that enhances appearance, protects surfaces and delivers consistent performance with every use.",
-    "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg",
-    "variants": [{"size": "500ml", "price": 380}, {"size": "2L", "price": 1380}, {"size": "5L", "price": 3200}],
-    "featured": False,
-}
-]
-
-
-@app.on_event("startup")
-async def seed_db():
-    count = await db.products.count_documents({})
-    if count == 0:
-        docs = []
-        for p in SEED_PRODUCTS:
-            prod = Product(**p)
-            docs.append(prod.model_dump())
-        await db.products.insert_many(docs)
-        logger.info(f"Seeded {len(docs)} products")
-
-
 # ---------- Routes ----------
 @api_router.get("/")
 async def root():
@@ -237,6 +135,68 @@ async def get_product(product_id: str):
     if not item:
         raise HTTPException(status_code=404, detail="Product not found")
     return item
+
+@api_router.post("/upload")
+async def upload_image(file: UploadFile = File(...)):
+    file_ext = file.filename.split(".")[-1]
+    filename = f"{uuid.uuid4()}.{file_ext}"
+
+    file_path = os.path.join("uploads", filename)
+
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {
+        "image": f"/uploads/{filename}"
+    }
+
+@api_router.post("/products", response_model=Product)
+async def create_product(
+    payload: ProductCreate,
+    _: str = Depends(verify_admin)
+):
+    product = Product(**payload.model_dump())
+
+    await db.products.insert_one(product.model_dump())
+
+    return product
+
+@api_router.put("/products/{product_id}", response_model=Product)
+async def update_product(
+    product_id: str,
+    payload: ProductUpdate,
+    _: str = Depends(verify_admin)
+):
+    existing = await db.products.find_one({"id": product_id})
+
+    if not existing:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    await db.products.update_one(
+        {"id": product_id},
+        {
+            "$set": payload.model_dump()
+        }
+    )
+
+    updated = await db.products.find_one(
+        {"id": product_id},
+        {"_id": 0}
+    )
+
+    return updated
+
+@api_router.delete("/products/{product_id}")
+async def delete_product(
+    product_id: str,
+    _: str = Depends(verify_admin)
+):
+    result = await db.products.delete_one({"id": product_id})
+
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    return {"message": "Product deleted successfully"}
 
 @api_router.post("/orders", response_model=Order)
 async def create_order(payload: OrderCreate):

@@ -1,0 +1,187 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "@/lib/api";
+import { toast } from "sonner";
+import { X } from "lucide-react";
+
+
+export default function AddProduct() {
+    const navigate = useNavigate();
+
+    const [form, setForm] = useState({
+        name: "",
+        description: "",
+        category: "",
+        image: "",
+        featured: false,
+        size: "",
+        price: "",
+    });
+    const [imageFile, setImageFile] = useState(null);
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+
+        setForm({
+            ...form,
+            [name]: type === "checkbox" ? checked : value,
+        });
+    };
+
+    const saveProduct = async (e) => {
+        e.preventDefault();
+
+        try {
+
+            let imagePath = "";
+
+            if (imageFile) {
+                const data = new FormData();
+                data.append("file", imageFile);
+
+                const upload = await api.post("/upload", data, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+
+                imagePath = upload.data.image;
+            }
+
+            await api.post("/products", {
+                name: form.name,
+                description: form.description,
+                category: form.category,
+                image: imagePath,
+                featured: form.featured,
+                variants: [
+                    {
+                        size: form.size,
+                        price: Number(form.price),
+                    },
+                ],
+            });
+
+            toast.success("Product Added Successfully");
+            navigate("/admin");
+
+        } catch (err) {
+            console.log(err);
+            toast.error("Failed to add product");
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-secondary flex justify-center py-10">
+            <div className="bg-white w-full max-w-3xl rounded-sm border border-border p-8">
+
+                <div className="flex items-center justify-between mb-8">
+                    <h1 className="font-heading text-3xl font-black">
+                        Add Product
+                    </h1>
+
+                    <button
+                        type="button"
+                        onClick={() => navigate("/admin")}
+                        className="h-10 w-10 rounded-full border border-border flex items-center justify-center hover:bg-gray-100 transition"
+                    >
+                        <X className="h-5 w-5" />
+                    </button>
+                </div>
+
+                <form onSubmit={saveProduct} className="space-y-5">
+
+                    <input
+                        name="name"
+                        placeholder="Product Name"
+                        value={form.name}
+                        onChange={handleChange}
+                        className="w-full border border-border p-3 rounded-sm"
+                        required
+                    />
+
+                    <textarea
+                        name="description"
+                        placeholder="Description"
+                        rows={5}
+                        value={form.description}
+                        onChange={handleChange}
+                        className="w-full border border-border p-3 rounded-sm"
+                        required
+                    />
+
+                    <input
+                        name="category"
+                        placeholder="Category"
+                        value={form.category}
+                        onChange={handleChange}
+                        className="w-full border border-border p-3 rounded-sm"
+                        required
+                    />
+
+                    <div className="space-y-3">
+
+                        <label className="block font-medium">
+                            Product Image
+                        </label>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setImageFile(e.target.files[0])}
+                            className="w-full border border-border p-3 rounded-sm"
+                        />
+
+                        {imageFile && (
+                            <img
+                                src={URL.createObjectURL(imageFile)}
+                                alt=""
+                                className="w-48 rounded border"
+                            />
+                        )}
+
+                    </div>
+
+                    <input
+                        type="text"
+                        name="size"
+                        placeholder="Enter Size (e.g. 300ml, 500ml, 1L, 5L)"
+                        value={form.size}
+                        onChange={handleChange}
+                        className="w-full border border-border p-3 rounded-sm"
+                        required
+                    />
+
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="Price"
+                        value={form.price}
+                        onChange={handleChange}
+                        className="w-full border border-border p-3 rounded-sm"
+                        required
+                    />
+
+                    <label className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            name="featured"
+                            checked={form.featured}
+                            onChange={handleChange}
+                        />
+                        Featured Product
+                    </label>
+
+                    <button
+                        type="submit"
+                        className="bg-brand-orange text-white px-6 py-3 rounded-sm font-semibold"
+                    >
+                        Save Product
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    );
+}
