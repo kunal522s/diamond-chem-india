@@ -82,7 +82,7 @@ export default function ProductDetailsModal({
               {product.name}
             </h2>
 
-            <p className="text-gray-600 mt-5 leading-7 text-sm md:text-base">
+            <p className="text-gray-600 mt-5 leading-7 text-sm md:text-base whitespace-pre-line">
               {product.description}
             </p>
 
