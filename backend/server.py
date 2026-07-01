@@ -22,9 +22,9 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 cloudinary.config(
-    cloud_name="lw3ob7dp",
-    api_key="989924354331375",
-    api_secret="ulG_iD6bQQSUB1G4L9j34BXpTZg",
+    cloud_name=os.environ['CLOUD_NAME'],
+    api_key=os.environ['API_KEY'],
+    api_secret=os.environ['API_SECRET'],
     secure=True,
 )
 
