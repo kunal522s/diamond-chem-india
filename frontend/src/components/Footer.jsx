@@ -28,23 +28,23 @@ export default function Footer() {
                   className="flex items-center gap-2 hover:text-brand-orange transition-colors"
                 >
                   <Phone className="h-4 w-4 text-brand-orange" />
-                  +91 9927873632
+                  +91 7060882911
                 </a>
               </li>
 
               <li>
                 <a
-                  href="mailto:kunaldhariwal0007@gmail.com"
+                  href="mailto:diamondchemindia@gmail.com"
                   className="flex items-center gap-2 hover:text-brand-orange transition-colors break-all"
                 >
                   <Mail className="h-4 w-4 text-brand-orange" />
-                  kunaldhariwal0007@gmail.com
+                  diamondchemindia@gmail.com
                 </a>
               </li>
 
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-brand-orange mt-1" />
-                <span>Industrial Area, Jarothi Village, India</span>
+                <span>Industrial Area, Jarothi Village, Hapur, India</span>
               </li>
 
             </ul>
@@ -74,12 +74,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Diamond Chem India · All rights reserved.
           </p>
 
-          <p>
-            Designed &amp; Developed by{" "}
-            <span className="font-medium text-white/80">
-              Kunal Dhariwal
-            </span>
-          </p>
+          
         </div>
       </div>
     </footer>

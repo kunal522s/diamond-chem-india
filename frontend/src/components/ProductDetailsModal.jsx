@@ -113,7 +113,7 @@ export default function ProductDetailsModal({
 
             <div className="mt-8">
               <p className="text-gray-500 uppercase text-xs tracking-widest">
-                Dealer Price
+                MRP
               </p>
 
               <h3 className="text-3xl md:text-5xl font-black text-brand-jet mt-2">

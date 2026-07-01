@@ -60,7 +60,7 @@ export default function ProductCard({ product }) {
             {/* Price */}
             <div className="flex-1">
               <div className="label-tech text-muted-foreground">
-                Dealer Price
+                MRP
               </div>
 
               <div
