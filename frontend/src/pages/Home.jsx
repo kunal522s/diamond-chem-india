@@ -67,7 +67,7 @@ export default function Home() {
 
             <div className="mt-14 grid grid-cols-3 gap-6 max-w-xl border-t border-white/15 pt-8">
               <div>
-                <div className="font-heading text-3xl font-bold">12+</div>
+                <div className="font-heading text-3xl font-bold">20+</div>
                 <div className="label-tech text-white/60 mt-1">Years</div>
               </div>
               <div>
@@ -133,7 +133,7 @@ export default function Home() {
           <div>
             <div className="label-tech text-brand-orange mb-3">Who We Are</div>
             <h2 className="font-heading text-3xl md:text-5xl font-bold uppercase leading-tight">
-              Manufacturing<br />precision since 2013
+              Manufacturing<br />precision since 2006
             </h2>
             <p className="mt-6 text-white/70 leading-relaxed">
               Diamond Chem India is a leading manufacturer of premium car & bike care chemicals. We supply detailing studios, workshops, OEMs and dealers across India with batch-tested formulations engineered for the Indian climate.
@@ -160,7 +160,7 @@ export default function Home() {
             />
             <div className="absolute bottom-4 left-4 right-4 bg-brand-orange/95 p-4 rounded-sm">
               <div className="label-tech text-brand-jet">Facility</div>
-              <div className="font-heading font-bold text-brand-jet">Industrial Area, Phase II</div>
+              <div className="font-heading font-bold text-brand-jet">Industrial Area, Jarothi Village, Hapur</div>
             </div>
           </div>
         </div>
