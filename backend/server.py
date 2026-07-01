@@ -39,7 +39,6 @@ ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
 
 app = FastAPI()
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 api_router = APIRouter(prefix="/api")
 
 # ---------- Models ----------
@@ -149,7 +148,7 @@ async def get_product(product_id: str):
 async def upload_image(file: UploadFile = File(...)):
     result = cloudinary.uploader.upload(
         file.file,
-        folder="diamond-chem-india",
+        folder="samples",
     )
 
     return {
