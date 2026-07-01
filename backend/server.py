@@ -14,10 +14,19 @@ from datetime import datetime, timezone, timedelta
 from fastapi import UploadFile, File
 from fastapi.staticfiles import StaticFiles
 import shutil
+import cloudinary
+import cloudinary.uploader
 
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+cloudinary.config(
+    cloud_name="lw3ob7dp",
+    api_key="989924354331375",
+    api_secret="ulG_iD6bQQSUB1G4L9j34BXpTZg",
+    secure=True,
+)
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -138,16 +147,13 @@ async def get_product(product_id: str):
 
 @api_router.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    file_ext = file.filename.split(".")[-1]
-    filename = f"{uuid.uuid4()}.{file_ext}"
-
-    file_path = os.path.join("uploads", filename)
-
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    result = cloudinary.uploader.upload(
+        file.file,
+        folder="diamond-chem-india",
+    )
 
     return {
-        "image": f"/uploads/{filename}"
+        "image": result["secure_url"]
     }
 
 @api_router.post("/products", response_model=Product)
