@@ -26,7 +26,7 @@ export default function Home() {
       <section className="relative overflow-hidden bg-brand-slate text-white">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/14908957/pexels-photo-14908957.jpeg"
+            src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
             alt="Workshop"
             className="h-full w-full object-cover opacity-40"
           />
