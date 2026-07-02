@@ -13,6 +13,7 @@ import AdminDashboard from "@/pages/AdminDashboard.jsx";
 import RequireAdmin from "@/components/RequireAdmin.jsx";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import ScrollToTop from "@/components/ScrollToTop";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
