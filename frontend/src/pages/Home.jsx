@@ -26,7 +26,7 @@ export default function Home() {
       <section className="relative overflow-hidden bg-brand-slate text-white">
         <div className="absolute inset-0">
           <img
-            src="/hero.jpg"
+            src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
             alt="Hero"
             className="h-full w-full object-cover object-right md:object-center"
           />
