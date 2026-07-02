@@ -41,7 +41,7 @@ export default function Home() {
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent md:from-black/80 md:via-black/45 md:to-transparent"></div>
+          <div className="absolute inset-0 bg-black/55 md:bg-gradient-to-r md:from-black/80 md:via-black/45 md:to-transparent"></div>
 
         </div>
         <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
