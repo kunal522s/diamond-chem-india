@@ -28,7 +28,7 @@ export default function Home() {
           <img
             src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
             alt="Workshop"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover brightness-75"
           />
         </div>
         <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
