@@ -7,7 +7,7 @@ import { X } from "lucide-react";
 
 export default function AddProduct() {
     const navigate = useNavigate();
-
+    const [saving, setSaving] = useState(false);
     const [form, setForm] = useState({
         name: "",
         description: "",
@@ -30,7 +30,9 @@ export default function AddProduct() {
 
     const saveProduct = async (e) => {
         e.preventDefault();
+        if (saving) return;
 
+        setSaving(true);
         try {
 
             let imagePath = "";
@@ -68,6 +70,8 @@ export default function AddProduct() {
         } catch (err) {
             console.log(err);
             toast.error("Failed to add product");
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -174,9 +178,14 @@ export default function AddProduct() {
 
                     <button
                         type="submit"
-                        className="bg-brand-orange text-white px-6 py-3 rounded-sm font-semibold"
+                        disabled={saving}
+                        className="bg-brand-orange text-white px-6 py-3 rounded-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                        Save Product
+                        {saving && (
+                            <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        )}
+
+                        {saving ? "Saving Product..." : "Save Product"}
                     </button>
 
                 </form>

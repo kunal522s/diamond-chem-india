@@ -11,7 +11,12 @@ import { Check, ArrowLeft } from "lucide-react";
 export default function Checkout() {
   const { items, totalAmount, totalQuantity, clear } = useCart();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ dealer_name: "", phone: "", address: "" });
+const [form, setForm] = useState({
+  dealer_name: "",
+  phone: "",
+  email: "",
+  address: "",
+});
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(null);
 
