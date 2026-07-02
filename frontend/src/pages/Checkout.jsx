@@ -23,6 +23,10 @@ export default function Checkout() {
       toast.error("Please fill all dealer details");
       return;
     }
+    if (!/^[6-9]\d{9}$/.test(form.phone)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
     if (items.length === 0) {
       toast.error("Cart is empty");
       return;
@@ -166,8 +170,19 @@ export default function Checkout() {
                   required
                   type="tel"
                   value={form.phone}
-                  onChange={onChange("phone")}
-                  placeholder="+91 98765 43210"
+                  maxLength={10}
+                  pattern="[6-9][0-9]{9}"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+
+                    if (value.length <= 10) {
+                      setForm((prev) => ({
+                        ...prev,
+                        phone: value,
+                      }));
+                    }
+                  }}
+                  placeholder="Enter 10-digit mobile number"
                   className="w-full rounded-sm border border-border px-4 py-3 focus:outline-none focus:border-brand-jet"
                 />
               </div>
