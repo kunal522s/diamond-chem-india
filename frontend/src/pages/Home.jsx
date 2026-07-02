@@ -41,7 +41,7 @@ export default function Home() {
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/55 md:bg-gradient-to-r md:from-black/80 md:via-black/45 md:to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/65 to-black/80 md:bg-gradient-to-r md:from-black/75 md:via-black/40 md:to-transparent"></div>
 
         </div>
         <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
@@ -55,7 +55,7 @@ export default function Home() {
               <span className="text-brand-orange">car & bike</span><br />
               care chemicals
             </h1>
-            <p className="mt-6 text-lg text-white/70 max-w-xl">
+            <p className="mt-6 text-lg text-white/90 max-w-xl">
               Wholesale supply of dashboard polish, tyre polish, car polish and interior cleaners — built for detailing studios, fleet workshops and retail dealers.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
