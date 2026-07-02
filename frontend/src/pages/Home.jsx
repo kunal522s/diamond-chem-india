@@ -26,10 +26,12 @@ export default function Home() {
       <section className="relative overflow-hidden bg-brand-slate text-white">
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
-            alt="Workshop"
-            className="h-full w-full object-cover brightness-75"
+            src="/hero.jpg"
+            alt="Hero"
+            className="h-full w-full object-cover object-right md:object-center"
           />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent"></div>
         </div>
         <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
           <div className="max-w-3xl animate-fade-up">
