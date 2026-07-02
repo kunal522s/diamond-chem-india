@@ -28,10 +28,8 @@ export default function Home() {
           <img
             src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
             alt="Workshop"
-            className="h-full w-full object-cover opacity-40"
+            className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-slate via-brand-slate/95 to-brand-slate/40" />
-          <div className="absolute inset-0 bg-grid opacity-20" />
         </div>
         <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
           <div className="max-w-3xl animate-fade-up">
