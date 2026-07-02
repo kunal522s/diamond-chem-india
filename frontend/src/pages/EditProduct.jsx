@@ -9,7 +9,7 @@ export default function EditProduct() {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
-
+    const [saving, setSaving] = useState(false);
     const [form, setForm] = useState({
         name: "",
         description: "",
@@ -67,7 +67,8 @@ export default function EditProduct() {
 
     const save = async (e) => {
         e.preventDefault();
-
+        if (saving) return;
+        setSaving(true);
         try {
             let image = form.image;
 
@@ -94,6 +95,8 @@ export default function EditProduct() {
         } catch (err) {
             console.log(err.response?.data);
             toast.error("Update Failed");
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -220,9 +223,15 @@ export default function EditProduct() {
                     </label>
 
                     <button
-                        className="bg-brand-orange text-white px-6 py-3 rounded-sm"
+                        type="submit"
+                        disabled={saving}
+                        className="bg-brand-orange text-white px-6 py-3 rounded-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                        Save Changes
+                        {saving && (
+                            <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        )}
+
+                        {saving ? "Saving Changes..." : "Save Changes"}
                     </button>
 
                 </form>
