@@ -23,39 +23,28 @@ export default function Home() {
       <CartDrawer />
 
       {/* HERO */}
-      <section className="relative overflow-hidden text-white min-h-[650px] md:min-h-screen">
-        <div className="absolute inset-0 bg-black">
-
-          {/* Desktop */}
+      <section className="relative overflow-hidden bg-brand-slate text-white">
+        <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
             alt="Hero"
-            className="hidden md:block h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-right md:object-center"
           />
 
-          {/* Mobile */}
-          <img
-            src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
-            alt="Hero"
-            className="block md:hidden h-full w-full object-contain object-center bg-black"
-          />
-
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/55 md:bg-black/40"></div>
-
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent"></div>
         </div>
-        <div className="relative container mx-auto px-5 md:px-8 pt-[340px] pb-16 md:py-32">
+        <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
           <div className="max-w-3xl animate-fade-up">
             <div className="inline-flex items-center gap-2 border border-brand-orange/40 bg-brand-orange/10 px-3 py-1 rounded-sm mb-6">
               <span className="h-1.5 w-1.5 bg-brand-orange rounded-full" />
               <span className="label-tech text-brand-orange">B2B Dealer Portal · India</span>
             </div>
-            <h1 className="font-heading text-3xl sm:text-5xl lg:text-7xl font-black leading-tight uppercase tracking-tight">
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] uppercase tracking-tight">
               Industrial-grade<br />
               <span className="text-brand-orange">car & bike</span><br />
               care chemicals
             </h1>
-            <p className="mt-6 text-base md:text-lg text-white/80 max-w-xl">
+            <p className="mt-6 text-lg text-white/70 max-w-xl">
               Wholesale supply of dashboard polish, tyre polish, car polish and interior cleaners — built for detailing studios, fleet workshops and retail dealers.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
