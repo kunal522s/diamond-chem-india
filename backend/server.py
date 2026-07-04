@@ -84,6 +84,7 @@ class OrderItem(BaseModel):
 class OrderCreate(BaseModel):
     dealer_name: str
     phone: str
+    email: Optional[str] = None
     address: str
     products: List[OrderItem]
 
@@ -91,6 +92,7 @@ class Order(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     dealer_name: str
     phone: str
+    email: Optional[str] = None
     address: str
     products: List[OrderItem]
     total_quantity: int
@@ -210,6 +212,7 @@ async def create_order(payload: OrderCreate):
     order = Order(
         dealer_name=payload.dealer_name,
         phone=payload.phone,
+        email=payload.email,
         address=payload.address,
         products=payload.products,
         total_quantity=total_quantity,
