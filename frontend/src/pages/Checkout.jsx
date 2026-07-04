@@ -11,12 +11,12 @@ import { Check, ArrowLeft } from "lucide-react";
 export default function Checkout() {
   const { items, totalAmount, totalQuantity, clear } = useCart();
   const navigate = useNavigate();
-const [form, setForm] = useState({
-  dealer_name: "",
-  phone: "",
-  email: "",
-  address: "",
-});
+  const [form, setForm] = useState({
+    dealer_name: "",
+    phone: "",
+    email: "",
+    address: "",
+  });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(null);
 
@@ -188,6 +188,19 @@ const [form, setForm] = useState({
                     }
                   }}
                   placeholder="Enter 10-digit mobile number"
+                  className="w-full rounded-sm border border-border px-4 py-3 focus:outline-none focus:border-brand-jet"
+                />
+              </div>
+              <div>
+                <label className="label-tech text-muted-foreground mb-2 block">
+                  Email Address <span className="text-gray-400">(Optional)</span>
+                </label>
+
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={onChange("email")}
+                  placeholder="dealer@example.com"
                   className="w-full rounded-sm border border-border px-4 py-3 focus:outline-none focus:border-brand-jet"
                 />
               </div>
