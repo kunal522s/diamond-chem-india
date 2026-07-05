@@ -42,9 +42,20 @@ export default function Footer() {
                 </a>
               </li>
 
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-brand-orange mt-1" />
-                <span>Industrial Area, Jarothi Village, Hapur, India</span>
+              <li>
+                <a
+                  href="https://www.google.com/maps/place/Diamond+Chem+India/@28.73747,77.8114062,17z/data=!3m1!4b1!4m6!3m5!1s0x390c85004d46efc3:0xcee6e40bbffa6909!8m2!3d28.73747!4d77.8114062!16s%2Fg%2F11vt5lvdt3?entry=ttu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 hover:text-brand-orange transition-colors"
+                >
+                  <MapPin className="h-4 w-4 text-brand-orange mt-1 flex-shrink-0" />
+                  <span>
+                    Diamond Chem India<br />
+                    Industrial Area, Jarothi Village,<br />
+                    Hapur, Uttar Pradesh, India
+                  </span>
+                </a>
               </li>
 
             </ul>
@@ -74,7 +85,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Diamond Chem India · All rights reserved.
           </p>
 
-          
+
         </div>
       </div>
     </footer>
