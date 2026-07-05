@@ -171,7 +171,7 @@ export default function Home() {
             />
             <div className="absolute bottom-4 left-4 right-4 bg-brand-orange/95 p-4 rounded-sm">
               <div className="label-tech text-brand-jet">Facility</div>
-              <div className="font-heading font-bold text-brand-jet">Diamond Chem India Industrial Area, Jarothi Village, Hapur, Uttar Pradesh, India</div>
+              <div className="font-heading font-bold text-brand-jet">Industrial Area, Jarothi Village, Hapur</div>
             </div>
           </div>
         </div>
