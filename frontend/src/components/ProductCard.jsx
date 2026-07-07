@@ -98,7 +98,7 @@ export default function ProductCard({ product }) {
                 href="https://www.amazon.in/gp/product/B0H7Q4KYKB?smid=A3JSTQ0G59YXII&psc=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 flex items-center justify-center gap-2 w-full h-12 rounded-md bg-[#FF9900] hover:bg-[#F7CA00] shadow-md hover:shadow-lg text-black font-bold transition-all duration-300"
+                className="mt-4 flex items-center justify-center w-full h-12 rounded-sm border border-brand-jet bg-brand-jet text-white font-semibold tracking-wide hover:bg-white hover:text-brand-jet transition-all duration-300"
               >
                 🛒 Buy on Amazon
               </a>
