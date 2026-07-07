@@ -93,44 +93,37 @@ export default function ProductCard({ product }) {
             </button>
           </div>
           {(product.amazon_url || product.flipkart_url) && (
-            <>
-              <div className="mt-4">
-                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-center text-gray-500 mb-3">
-                  Available Online
-                </p>
+            <div className="mt-5 border-t border-border pt-5">
 
-                <div className="grid grid-cols-2 gap-3">
+              <p className="mb-3 text-center text-[11px] font-bold uppercase tracking-[0.28em] text-gray-500">
+                Buy Online
+              </p>
 
-                  {product.amazon_url ? (
-                    <a
-                      href={product.amazon_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-11 flex items-center justify-center rounded-sm bg-brand-jet text-white font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300"
-                    >
-                      Amazon →
-                    </a>
-                  ) : (
-                    <div />
-                  )}
+              {product.amazon_url && (
+                <a
+                  href={product.amazon_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-3 flex h-12 w-full items-center justify-between rounded-sm border border-brand-jet bg-brand-jet px-5 text-white font-semibold tracking-wide shadow-sm transition-all duration-300 hover:shadow-lg"
+                >
+                  <span>Buy on Amazon</span>
+                  <span>→</span>
+                </a>
+              )}
 
-                  {product.flipkart_url ? (
-                    <a
-                      href={product.flipkart_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-11 flex items-center justify-center rounded-sm bg-[#FFD814] text-black font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300"
-                    >
-                      Flipkart →
-                    </a>
-                  ) : (
-                    <div />
-                  )}
+              {product.flipkart_url && (
+                <a
+                  href={product.flipkart_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 w-full items-center justify-between rounded-sm border border-[#FFD814] bg-[#FFD814] px-5 text-black font-semibold tracking-wide shadow-sm transition-all duration-300 hover:shadow-lg"
+                >
+                  <span>Buy on Flipkart</span>
+                  <span>→</span>
+                </a>
+              )}
 
-                </div>
-
-              </div>
-            </>
+            </div>
           )}
         </div>
       </article>
