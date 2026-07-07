@@ -95,7 +95,7 @@ export default function ProductCard({ product }) {
           {(product.amazon_url || product.flipkart_url) && (
             <>
               <div className="mt-4">
-                <p className="text-xs font-semibold text-center text-muted-foreground mb-3 uppercase tracking-wider">
+                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-center text-gray-500 mb-3">
                   Available Online
                 </p>
 
@@ -106,9 +106,9 @@ export default function ProductCard({ product }) {
                       href={product.amazon_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-11 flex items-center justify-center rounded-sm bg-brand-jet text-white font-semibold shadow-md hover:shadow-xl transition-all"
+                      className="h-11 flex items-center justify-center rounded-sm bg-brand-jet text-white font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300"
                     >
-                      🛒 Amazon
+                      Amazon →
                     </a>
                   ) : (
                     <div />
@@ -119,9 +119,9 @@ export default function ProductCard({ product }) {
                       href={product.flipkart_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-11 flex items-center justify-center rounded-sm bg-[#FFD814] text-black font-semibold shadow-md hover:bg-[#F7CA00] transition-all"
+                      className="h-11 flex items-center justify-center rounded-sm bg-[#FFD814] text-black font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300"
                     >
-                      🛍 Flipkart
+                      Flipkart →
                     </a>
                   ) : (
                     <div />
@@ -129,9 +129,6 @@ export default function ProductCard({ product }) {
 
                 </div>
 
-                <p className="mt-3 text-center text-xs font-medium text-muted-foreground">
-                  ✓ Officially available online
-                </p>
               </div>
             </>
           )}
