@@ -16,6 +16,8 @@ export default function EditProduct() {
         category: "",
         image: "",
         featured: false,
+        amazon_url: "",
+        flipkart_url: "",
         variants: [
             {
                 size: "",
@@ -221,6 +223,32 @@ export default function EditProduct() {
                         />
                         Featured Product
                     </label>
+
+                    <div className="border-t border-border pt-6 space-y-4">
+
+                        <h2 className="font-heading text-xl font-bold">
+                            Marketplace Links
+                        </h2>
+
+                        <input
+                            type="url"
+                            name="amazon_url"
+                            placeholder="Amazon Product URL"
+                            value={form.amazon_url}
+                            onChange={handleChange}
+                            className="w-full border border-border p-3 rounded-sm"
+                        />
+
+                        <input
+                            type="url"
+                            name="flipkart_url"
+                            placeholder="Flipkart Product URL"
+                            value={form.flipkart_url}
+                            onChange={handleChange}
+                            className="w-full border border-border p-3 rounded-sm"
+                        />
+
+                    </div>
 
                     <button
                         type="submit"
