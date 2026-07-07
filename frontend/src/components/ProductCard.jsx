@@ -104,7 +104,7 @@ export default function ProductCard({ product }) {
                   href={product.amazon_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mb-3 flex h-12 w-full items-center justify-between rounded-sm border border-brand-jet bg-brand-jet px-5 text-white font-semibold tracking-wide shadow-sm transition-all duration-300 hover:shadow-lg"
+                  className="mb-3 flex h-14 w-full items-center justify-between rounded-sm border border-brand-jet bg-brand-jet px-6 text-white font-semibold tracking-wide shadow-sm transition-all duration-300 hover:shadow-lg"
                 >
                   <span>Buy on Amazon</span>
                   <span>→</span>
