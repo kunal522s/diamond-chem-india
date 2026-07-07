@@ -14,6 +14,10 @@ export default function AddProduct() {
         category: "",
         image: "",
         featured: false,
+
+        amazon_url: "",
+        flipkart_url: "",
+
         size: "",
         price: "",
     });
@@ -56,6 +60,8 @@ export default function AddProduct() {
                 category: form.category,
                 image: imagePath,
                 featured: form.featured,
+                amazon_url: form.amazon_url,
+                flipkart_url: form.flipkart_url,
                 variants: [
                     {
                         size: form.size,
@@ -165,6 +171,30 @@ export default function AddProduct() {
                         className="w-full border border-border p-3 rounded-sm"
                         required
                     />
+
+                    <div className="border rounded-sm p-5 space-y-4 bg-gray-50">
+                        <h3 className="font-heading text-xl font-bold">
+                            Marketplace Links
+                        </h3>
+
+                        <input
+                            type="url"
+                            name="amazon_url"
+                            placeholder="Amazon Product URL"
+                            value={form.amazon_url}
+                            onChange={handleChange}
+                            className="w-full border border-border p-3 rounded-sm"
+                        />
+
+                        <input
+                            type="url"
+                            name="flipkart_url"
+                            placeholder="Flipkart Product URL"
+                            value={form.flipkart_url}
+                            onChange={handleChange}
+                            className="w-full border border-border p-3 rounded-sm"
+                        />
+                    </div>
 
                     <label className="flex items-center gap-3">
                         <input

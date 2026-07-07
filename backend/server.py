@@ -55,6 +55,8 @@ class Product(BaseModel):
     variants: List[Variant]
     featured: bool = False
 
+    amazon_url: Optional[str] = ""
+    flipkart_url: Optional[str] = ""
 
 class ProductCreate(BaseModel):
     name: str
@@ -64,6 +66,8 @@ class ProductCreate(BaseModel):
     variants: List[Variant]
     featured: bool = False
 
+    amazon_url: Optional[str] = ""
+    flipkart_url: Optional[str] = ""
 
 class ProductUpdate(BaseModel):
     name: str
@@ -73,6 +77,8 @@ class ProductUpdate(BaseModel):
     variants: List[Variant]
     featured: bool = False
     
+    amazon_url: Optional[str] = ""
+    flipkart_url: Optional[str] = ""
 
 class OrderItem(BaseModel):
     product_id: str
