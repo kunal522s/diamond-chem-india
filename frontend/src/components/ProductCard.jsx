@@ -100,7 +100,7 @@ export default function ProductCard({ product }) {
                 rel="noopener noreferrer"
                 className="mt-4 flex items-center justify-center w-full h-12 rounded-sm bg-brand-jet text-white font-semibold tracking-wide shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
               >
-                🛒 Buy on Amazon
+                Buy on Amazon →
               </a>
 
               <p className="mt-2 text-center text-xs font-medium text-muted-foreground">
