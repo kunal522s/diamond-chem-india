@@ -95,10 +95,6 @@ export default function ProductCard({ product }) {
           {(product.amazon_url || product.flipkart_url) && (
             <div className="mt-5 border-t border-border pt-5">
 
-              <p className="mb-3 text-center text-[11px] font-bold uppercase tracking-[0.28em] text-gray-500">
-                Buy Online
-              </p>
-
               {product.amazon_url && (
                 <a
                   href={product.amazon_url}
