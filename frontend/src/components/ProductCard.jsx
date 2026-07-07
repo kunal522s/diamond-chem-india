@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProductDetailsModal from "@/components/ProductDetailsModal";
 import { Plus } from "lucide-react";
+import { FaAmazon } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
 
@@ -92,6 +93,23 @@ export default function ProductCard({ product }) {
               Add
             </button>
           </div>
+          {product.name === "Diamond Car & Bike Polish" && (
+            <>
+              <a
+                href="https://www.amazon.in/gp/product/B0H7Q4KYKB?smid=A3JSTQ0G59YXII&psc=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 flex items-center justify-center gap-2 w-full h-12 rounded-md bg-[#FF9900] hover:bg-[#F7CA00] shadow-md hover:shadow-lg text-black font-bold transition-all duration-300"
+              >
+                <FaAmazon className="text-xl" />
+                Buy on Amazon
+              </a>
+
+              <p className="mt-2 text-center text-xs text-muted-foreground font-medium">
+                ✓ Officially available on Amazon India
+              </p>
+            </>
+          )}
         </div>
       </article>
 
