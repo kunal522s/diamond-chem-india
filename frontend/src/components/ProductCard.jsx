@@ -93,7 +93,7 @@ export default function ProductCard({ product }) {
               Add
             </button>
           </div>
-          {product.name === "Diamond Car & Bike Polish" && (
+          {true && (
             <>
               <a
                 href="https://www.amazon.in/gp/product/B0H7Q4KYKB?smid=A3JSTQ0G59YXII&psc=1"
