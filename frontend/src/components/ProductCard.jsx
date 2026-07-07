@@ -92,20 +92,47 @@ export default function ProductCard({ product }) {
               Add
             </button>
           </div>
-          {product.name === "Diamond Car & Bike Polish" && (
+          {(product.amazon_url || product.flipkart_url) && (
             <>
-              <a
-                href="https://www.amazon.in/gp/product/B0H7Q4KYKB?smid=A3JSTQ0G59YXII&psc=1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 flex items-center justify-center w-full h-12 rounded-sm bg-brand-jet text-white font-semibold tracking-wide shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-              >
-                Buy on Amazon →
-              </a>
+              <div className="mt-4">
+                <p className="text-xs font-semibold text-center text-muted-foreground mb-3 uppercase tracking-wider">
+                  Available Online
+                </p>
 
-              <p className="mt-2 text-center text-xs font-medium text-muted-foreground">
-                ✓ Officially available on Amazon India
-              </p>
+                <div className="grid grid-cols-2 gap-3">
+
+                  {product.amazon_url ? (
+                    <a
+                      href={product.amazon_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-11 flex items-center justify-center rounded-sm bg-brand-jet text-white font-semibold shadow-md hover:shadow-xl transition-all"
+                    >
+                      🛒 Amazon
+                    </a>
+                  ) : (
+                    <div />
+                  )}
+
+                  {product.flipkart_url ? (
+                    <a
+                      href={product.flipkart_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-11 flex items-center justify-center rounded-sm bg-[#2874F0] text-white font-semibold shadow-md hover:shadow-xl transition-all"
+                    >
+                      🛍 Flipkart
+                    </a>
+                  ) : (
+                    <div />
+                  )}
+
+                </div>
+
+                <p className="mt-3 text-center text-xs font-medium text-muted-foreground">
+                  ✓ Officially available online
+                </p>
+              </div>
             </>
           )}
         </div>
