@@ -119,7 +119,7 @@ export default function ProductCard({ product }) {
                       href={product.flipkart_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-11 flex items-center justify-center rounded-sm bg-[#2874F0] text-white font-semibold shadow-md hover:shadow-xl transition-all"
+                      className="h-11 flex items-center justify-center rounded-sm bg-[#FFD814] text-black font-semibold shadow-md hover:bg-[#F7CA00] transition-all"
                     >
                       🛍 Flipkart
                     </a>
