@@ -176,7 +176,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 md:px-8">
 
-          <div className="grid lg:grid-cols-[1.2fr_.7fr_1.2fr] gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_.7fr_1.2fr] gap-12 items-start">
 
             {/* LEFT */}
 
@@ -192,7 +192,7 @@ export default function Home() {
 
               </div>
 
-              <h2 className="font-heading text-5xl md:text-7xl font-black uppercase leading-[0.95]">
+              <h2 className="font-heading text-4xl sm:text-5xl lg:text-7xl font-black uppercase leading-[0.95]">
                 Manufacturing
                 <br />
                 Excellence
@@ -202,10 +202,10 @@ export default function Home() {
                 </span>
               </h2>
 
-              <div className="mt-10 grid grid-cols-2 gap-4">
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
 
-                <div className="border border-white/10 rounded-lg p-5 text-center">
-                  <div className="font-heading text-4xl font-black text-brand-orange">
+                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
                     20+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -213,8 +213,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="border border-white/10 rounded-lg p-5 text-center">
-                  <div className="font-heading text-4xl font-black text-brand-orange">
+                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
                     800+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -222,8 +222,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="border border-white/10 rounded-lg p-5 text-center">
-                  <div className="font-heading text-4xl font-black text-brand-orange">
+                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
                     40+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -231,8 +231,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="border border-white/10 rounded-lg p-5 text-center">
-                  <div className="font-heading text-4xl font-black text-brand-orange">
+                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
                     5T+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -242,7 +242,7 @@ export default function Home() {
 
               </div>
 
-              <p className="mt-8 text-white/70 leading-8">
+              <p className="mt-8 text-white/70 text-sm sm:text-base leading-7">
 
                 Diamond Chem India is a leading manufacturer of premium
                 automotive care chemicals supplying detailing studios,
@@ -250,7 +250,7 @@ export default function Home() {
 
               </p>
 
-              <p className="mt-6 text-white/60 leading-8">
+              <p className="mt-6 text-white/60 text-sm sm:text-base leading-7">
 
                 Every formulation is manufactured using carefully selected
                 raw materials and strict quality standards to deliver
@@ -258,7 +258,7 @@ export default function Home() {
 
               </p>
 
-              <p className="mt-6 text-white/60 leading-8">
+              <p className="mt-6 text-white/60 text-sm sm:text-base leading-7">
 
                 With two decades of manufacturing experience we continue
                 expanding our dealer network while maintaining reliable
@@ -270,7 +270,7 @@ export default function Home() {
 
             {/* TIMELINE */}
 
-            <div className="relative pt-4">
+            <div className="relative pt-2 lg:pt-4">
 
               <div className="absolute left-[11px] top-0 bottom-0 w-px bg-brand-orange/40"></div>
 
@@ -304,7 +304,7 @@ export default function Home() {
                     <div className="h-2.5 w-2.5 rounded-full bg-brand-orange"></div>
                   </div>
 
-                  <div className="font-heading text-4xl font-black text-brand-orange leading-none">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange leading-none">
                     {item.year}
                   </div>
 
@@ -323,16 +323,16 @@ export default function Home() {
 
             {/* RIGHT IMAGE */}
 
-            <div className="sticky top-24">
+            <div className="lg:sticky lg:top-24">
 
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
                   src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
                   alt=""
-                  className="h-[560px] w-full object-cover"
+                  className="h-[260px] sm:h-[420px] lg:h-[520px] w-full object-cover"
                 />
-                <div className="absolute top-6 left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
+                <div className="absolute top-4 left-4 lg:top-6 lg:left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
                   <div className="font-heading text-3xl font-black text-brand-orange">
                     20+
                   </div>
@@ -368,15 +368,15 @@ export default function Home() {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="bg-brand-orange flex flex-col items-center justify-center gap-2 py-8 border border-white/10"
+                      className="bg-brand-orange flex flex-col items-center justify-center gap-2 py-4 lg:py-6 border border-white/10"
                     >
-                      <item.icon className="h-6 w-6 text-white" />
+                      <item.icon className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
 
-                      <div className="text-sm font-semibold">
+                      <div className="text-xs lg:text-sm font-semibold">
                         {item.title}
                       </div>
 
-                      <div className="text-[11px] text-white/80">
+                      <div className="hidden lg:block text-[11px] text-white/80">
                         {item.sub}
                       </div>
 
