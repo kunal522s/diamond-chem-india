@@ -176,7 +176,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 md:px-8">
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_0.75fr_500px] gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_.7fr_1.2fr] gap-12 items-start">
 
             {/* LEFT */}
 
