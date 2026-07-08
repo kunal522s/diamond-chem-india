@@ -1,6 +1,11 @@
 import { useState } from "react";
 import ProductDetailsModal from "@/components/ProductDetailsModal";
-import { Plus } from "lucide-react";
+import {
+  Plus,
+  ShoppingCart,
+  ShoppingBag,
+  ArrowUpRight,
+} from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
 
@@ -102,8 +107,12 @@ export default function ProductCard({ product }) {
                   rel="noopener noreferrer"
                   className="mb-3 flex h-14 w-full items-center justify-between rounded-sm border border-brand-jet bg-brand-jet px-6 text-white font-semibold tracking-wide shadow-sm transition-all duration-300 hover:shadow-lg"
                 >
-                  <span>Buy on Amazon</span>
-                  <span>→</span>
+                  <div className="flex items-center gap-3">
+                    <ShoppingCart className="h-5 w-5" />
+                    <span>Buy on Amazon</span>
+                  </div>
+
+                  <ArrowUpRight className="h-5 w-5" />
                 </a>
               )}
 
@@ -114,8 +123,12 @@ export default function ProductCard({ product }) {
                   rel="noopener noreferrer"
                   className="mt-3 h-14 flex items-center justify-between px-6 rounded-sm bg-[#FACC15] text-black font-semibold shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                  <span>Buy on Flipkart</span>
-                  <span>→</span>
+                  <div className="flex items-center gap-3">
+                    <ShoppingBag className="h-5 w-5" />
+                    <span>Buy on Flipkart</span>
+                  </div>
+
+                  <ArrowUpRight className="h-5 w-5" />
                 </a>
               )}
 
