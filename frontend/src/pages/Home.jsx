@@ -176,7 +176,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 md:px-8">
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_.7fr_1.2fr] gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_.7fr_430px] gap-10 items-start">
 
             {/* LEFT */}
 
@@ -328,7 +328,7 @@ export default function Home() {
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
-                  src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
+                  src="https://images.pexels.com/photos/4489732/pexels-photo-4489732.jpeg"
                   alt="Professional Car Detailing"
                   className="h-[360px] sm:h-[550px] lg:h-[670px] xl:h-[720px] w-full object-cover"
                 />
