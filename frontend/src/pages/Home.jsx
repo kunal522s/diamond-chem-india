@@ -202,260 +202,193 @@ export default function Home() {
                 </span>
               </h2>
 
-              <div className="border border-white/10 rounded-lg p-5 text-center">
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  20+
-                </div>
-                <div className="label-tech mt-2 text-white/60">
-                  YEARS OF EXPERIENCE
-                </div>
-              </div>
+              <div className="mt-10 grid grid-cols-2 gap-4">
 
-              <div className="border border-white/10 rounded-lg p-5 text-center">
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  800+
-                </div>
-                <div className="label-tech mt-2 text-white/60">
-                  DEALERS
-                </div>
-              </div>
-
-              <div className="border border-white/10 rounded-lg p-5 text-center">
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  40+
-                </div>
-                <div className="label-tech mt-2 text-white/60">
-                  PRODUCTS
-                </div>
-              </div>
-
-              <div className="border border-white/10 rounded-lg p-5 text-center">
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  5T+
-                </div>
-                <div className="label-tech mt-2 text-white/60">
-                  MONTHLY OUTPUT
-                </div>
-              </div>
-
-            </div>
-
-            <p className="mt-8 text-white/70 leading-8">
-
-              Diamond Chem India is a leading manufacturer of premium
-              automotive care chemicals supplying detailing studios,
-              distributors, workshops and OEM partners across India.
-
-            </p>
-
-            <p className="mt-6 text-white/60 leading-8">
-
-              Every formulation is manufactured using carefully selected
-              raw materials and strict quality standards to deliver
-              consistent shine, protection and long-lasting performance.
-
-            </p>
-
-            <p className="mt-6 text-white/60 leading-8">
-
-              With two decades of manufacturing experience we continue
-              expanding our dealer network while maintaining reliable
-              production capacity and nationwide supply.
-
-            </p>
-
-            {/* STATS */}
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-
-              <div className="border border-white/10 bg-white/5 rounded-lg p-5">
-
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  20+
-                </div>
-
-                <div className="label-tech mt-2">
-                  YEARS
-                </div>
-
-                <div className="text-xs text-white/50 mt-1">
-                  OF EXPERIENCE
-                </div>
-
-              </div>
-
-              <div className="border border-white/10 bg-white/5 rounded-lg p-5">
-
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  800+
-                </div>
-
-                <div className="label-tech mt-2">
-                  DEALERS
-                </div>
-
-                <div className="text-xs text-white/50 mt-1">
-                  NATIONWIDE
-                </div>
-
-              </div>
-
-              <div className="border border-white/10 bg-white/5 rounded-lg p-5">
-
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  40+
-                </div>
-
-                <div className="label-tech mt-2">
-                  PRODUCTS
-                </div>
-
-                <div className="text-xs text-white/50 mt-1">
-                  IN PORTFOLIO
-                </div>
-
-              </div>
-
-              <div className="border border-white/10 bg-white/5 rounded-lg p-5">
-
-                <div className="font-heading text-4xl font-black text-brand-orange">
-                  5T+
-                </div>
-
-                <div className="label-tech mt-2">
-                  MONTHLY
-                </div>
-
-                <div className="text-xs text-white/50 mt-1">
-                  PRODUCTION
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* TIMELINE */}
-
-          <div className="relative">
-
-            <div className="absolute left-[11px] top-0 bottom-0 w-px bg-brand-orange/40"></div>
-
-            {[
-              {
-                year: "2006",
-                title: "Company Established",
-                desc: "Started our journey with a vision to deliver premium automotive chemicals.",
-              },
-              {
-                year: "2012",
-                title: "Manufacturing Unit",
-                desc: "Expanded production facility and increased manufacturing capacity.",
-              },
-              {
-                year: "2017",
-                title: "Nationwide Expansion",
-                desc: "Built dealer network across multiple Indian states.",
-              },
-              {
-                year: "2025",
-                title: "800+ Dealers",
-                desc: "Trusted by detailing studios and distributors nationwide.",
-              },
-            ].map((item) => (
-              <div
-                key={item.year}
-                className="relative pl-10 pb-10"
-              >
-                <div className="absolute left-0 top-1 h-6 w-6 rounded-full border-2 border-brand-orange bg-[#101010] flex items-center justify-center">
-                  <div className="h-2.5 w-2.5 rounded-full bg-brand-orange"></div>
-                </div>
-
-                <div className="font-heading text-4xl font-black text-brand-orange leading-none">
-                  {item.year}
-                </div>
-
-                <div className="font-semibold mt-1">
-                  {item.title}
-                </div>
-
-                <p className="text-white/55 text-sm leading-6 mt-2">
-                  {item.desc}
-                </p>
-
-              </div>
-            ))}
-
-          </div>
-
-          {/* RIGHT IMAGE */}
-
-          <div>
-
-            <div className="relative overflow-hidden border border-white/10 rounded-lg">
-
-              <img
-                src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
-                alt=""
-                className="h-[520px] w-full object-cover"
-              />
-              <div className="absolute top-6 left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
-                <div className="font-heading text-3xl font-black text-brand-orange">
-                  20+
-                </div>
-
-                <div className="text-xs uppercase tracking-wider">
-                  Years Experience
-                </div>
-              </div>
-
-              <div className="grid grid grid-cols-2 bg-brand-orange">
-
-                {[
-                  {
-                    icon: Shield,
-                    title: "ISO Certified",
-                    sub: "Quality Assured",
-                  },
-                  {
-                    icon: Factory,
-                    title: "Made in India",
-                    sub: "Proudly Manufactured",
-                  },
-                  {
-                    icon: Truck,
-                    title: "Fast Dispatch",
-                    sub: "Pan India Delivery",
-                  },
-                  {
-                    icon: Headset,
-                    title: "Dealer Support",
-                    sub: "Always Here to Help",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="flex flex-col items-center justify-center gap-2 py-6 border-white/20 border-r last:border-r-0"
-                  >
-                    <item.icon className="h-6 w-6 text-white" />
-
-                    <div className="text-sm font-semibold">
-                      {item.title}
-                    </div>
-
-                    <div className="text-[11px] text-white/80">
-                      {item.sub}
-                    </div>
-
+                <div className="border border-white/10 rounded-lg p-5 text-center">
+                  <div className="font-heading text-4xl font-black text-brand-orange">
+                    20+
                   </div>
-                ))}
+                  <div className="label-tech mt-2 text-white/60">
+                    YEARS OF EXPERIENCE
+                  </div>
+                </div>
+
+                <div className="border border-white/10 rounded-lg p-5 text-center">
+                  <div className="font-heading text-4xl font-black text-brand-orange">
+                    800+
+                  </div>
+                  <div className="label-tech mt-2 text-white/60">
+                    DEALERS
+                  </div>
+                </div>
+
+                <div className="border border-white/10 rounded-lg p-5 text-center">
+                  <div className="font-heading text-4xl font-black text-brand-orange">
+                    40+
+                  </div>
+                  <div className="label-tech mt-2 text-white/60">
+                    PRODUCTS
+                  </div>
+                </div>
+
+                <div className="border border-white/10 rounded-lg p-5 text-center">
+                  <div className="font-heading text-4xl font-black text-brand-orange">
+                    5T+
+                  </div>
+                  <div className="label-tech mt-2 text-white/60">
+                    MONTHLY OUTPUT
+                  </div>
+                </div>
 
               </div>
 
+              <p className="mt-8 text-white/70 leading-8">
+
+                Diamond Chem India is a leading manufacturer of premium
+                automotive care chemicals supplying detailing studios,
+                distributors, workshops and OEM partners across India.
+
+              </p>
+
+              <p className="mt-6 text-white/60 leading-8">
+
+                Every formulation is manufactured using carefully selected
+                raw materials and strict quality standards to deliver
+                consistent shine, protection and long-lasting performance.
+
+              </p>
+
+              <p className="mt-6 text-white/60 leading-8">
+
+                With two decades of manufacturing experience we continue
+                expanding our dealer network while maintaining reliable
+                production capacity and nationwide supply.
+
+              </p>
+              
             </div>
 
-          </div> {/* grid end */}
+            {/* TIMELINE */}
+
+            <div className="relative">
+
+              <div className="absolute left-[11px] top-0 bottom-0 w-px bg-brand-orange/40"></div>
+
+              {[
+                {
+                  year: "2006",
+                  title: "Company Established",
+                  desc: "Started our journey with a vision to deliver premium automotive chemicals.",
+                },
+                {
+                  year: "2012",
+                  title: "Manufacturing Unit",
+                  desc: "Expanded production facility and increased manufacturing capacity.",
+                },
+                {
+                  year: "2017",
+                  title: "Nationwide Expansion",
+                  desc: "Built dealer network across multiple Indian states.",
+                },
+                {
+                  year: "2025",
+                  title: "800+ Dealers",
+                  desc: "Trusted by detailing studios and distributors nationwide.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.year}
+                  className="relative pl-10 pb-10"
+                >
+                  <div className="absolute left-0 top-1 h-6 w-6 rounded-full border-2 border-brand-orange bg-[#101010] flex items-center justify-center">
+                    <div className="h-2.5 w-2.5 rounded-full bg-brand-orange"></div>
+                  </div>
+
+                  <div className="font-heading text-4xl font-black text-brand-orange leading-none">
+                    {item.year}
+                  </div>
+
+                  <div className="font-semibold mt-1">
+                    {item.title}
+                  </div>
+
+                  <p className="text-white/55 text-sm leading-6 mt-2">
+                    {item.desc}
+                  </p>
+
+                </div>
+              ))}
+
+            </div>
+
+            {/* RIGHT IMAGE */}
+
+            <div>
+
+              <div className="relative overflow-hidden border border-white/10 rounded-lg">
+
+                <img
+                  src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
+                  alt=""
+                  className="h-[520px] w-full object-cover"
+                />
+                <div className="absolute top-6 left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
+                  <div className="font-heading text-3xl font-black text-brand-orange">
+                    20+
+                  </div>
+
+                  <div className="text-xs uppercase tracking-wider">
+                    Years Experience
+                  </div>
+                </div>
+
+                <div className="grid grid grid-cols-2 bg-brand-orange">
+
+                  {[
+                    {
+                      icon: Shield,
+                      title: "ISO Certified",
+                      sub: "Quality Assured",
+                    },
+                    {
+                      icon: Factory,
+                      title: "Made in India",
+                      sub: "Proudly Manufactured",
+                    },
+                    {
+                      icon: Truck,
+                      title: "Fast Dispatch",
+                      sub: "Pan India Delivery",
+                    },
+                    {
+                      icon: Headset,
+                      title: "Dealer Support",
+                      sub: "Always Here to Help",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.title}
+                      className="flex flex-col items-center justify-center gap-2 py-6 border-white/20 border-r last:border-r-0"
+                    >
+                      <item.icon className="h-6 w-6 text-white" />
+
+                      <div className="text-sm font-semibold">
+                        {item.title}
+                      </div>
+
+                      <div className="text-[11px] text-white/80">
+                        {item.sub}
+                      </div>
+
+                    </div>
+                  ))}
+
+                </div>
+
+              </div>
+
+            </div> {/* grid end */}
+          </div>
 
         </div> {/* container end */}
 
