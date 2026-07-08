@@ -5,7 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductCard from "@/components/ProductCard";
-import { ArrowRight, Shield, Truck, Award, Factory } from "lucide-react";
+import {
+  ArrowRight, Shield, Truck, Award, Factory, CheckCircle, FlaskConical, BadgeCheck, Users,
+} from "lucide-react";
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
@@ -20,17 +22,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-  if (location.state?.scrollTo) {
-    setTimeout(() => {
-      document.getElementById(location.state.scrollTo)?.scrollIntoView({
-        behavior: "smooth",
-      });
+    if (location.state?.scrollTo) {
+      setTimeout(() => {
+        document.getElementById(location.state.scrollTo)?.scrollIntoView({
+          behavior: "smooth",
+        });
 
-      // state clear kar do
-      navigate(location.pathname, { replace: true, state: {} });
-    }, 100);
-  }
-}, [location, navigate]);
+        // state clear kar do
+        navigate(location.pathname, { replace: true, state: {} });
+      }, 100);
+    }
+  }, [location, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -157,25 +159,75 @@ export default function Home() {
       <section id="about" className="bg-brand-jet text-white py-20">
         <div className="container mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="label-tech text-brand-orange mb-3">Who We Are</div>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold uppercase leading-tight">
-              Manufacturing<br />precision since 2006
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-[2px] w-14 bg-brand-orange"></div>
+
+              <span className="label-tech text-brand-orange tracking-[0.25em]">
+                ABOUT DIAMOND CHEM INDIA
+              </span>
+            </div>
+
+            <h2 className="font-heading text-4xl md:text-6xl font-black uppercase leading-tight">
+              Engineering
+              <br />
+              Premium Automotive
+              <br />
+              Care Chemicals
             </h2>
+
+            <p className="mt-6 max-w-xl text-lg text-white/75 leading-relaxed">
+              Trusted by detailing studios, distributors and dealers across India with
+              industrial-grade manufacturing, consistent product quality and reliable
+              nationwide supply.
+            </p>
             <p className="mt-6 text-white/70 leading-relaxed">
               Diamond Chem India is a leading manufacturer of premium car & bike care chemicals. We supply detailing studios, workshops, OEMs and dealers across India with batch-tested formulations engineered for the Indian climate.
             </p>
             <p className="mt-4 text-white/70 leading-relaxed">
               Our products are made in our ISO-certified facility and trusted by 800+ dealers nationwide. Every bottle is built for performance, profitability and repeat business.
             </p>
-            <div className="mt-8 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 max-w-md">
-              <div>
-                <div className="font-heading text-4xl font-bold text-brand-orange">98%</div>
-                <div className="label-tech text-white/60 mt-1">Dealer Retention</div>
+            <div className="mt-10 grid grid-cols-2 gap-5">
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                <FlaskConical className="h-7 w-7 text-brand-orange mb-3" />
+                <h4 className="font-semibold mb-2">
+                  Advanced Formulations
+                </h4>
+                <p className="text-sm text-white/60">
+                  High-performance chemicals developed for Indian weather conditions.
+                </p>
               </div>
-              <div>
-                <div className="font-heading text-4xl font-bold text-brand-orange">5T+</div>
-                <div className="label-tech text-white/60 mt-1">Monthly Output</div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                <BadgeCheck className="h-7 w-7 text-brand-orange mb-3" />
+                <h4 className="font-semibold mb-2">
+                  Quality Certified
+                </h4>
+                <p className="text-sm text-white/60">
+                  Every batch undergoes strict quality inspection before dispatch.
+                </p>
               </div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                <Users className="h-7 w-7 text-brand-orange mb-3" />
+                <h4 className="font-semibold mb-2">
+                  800+ Dealers
+                </h4>
+                <p className="text-sm text-white/60">
+                  Trusted by detailing studios and distributors throughout India.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                <CheckCircle className="h-7 w-7 text-brand-orange mb-3" />
+                <h4 className="font-semibold mb-2">
+                  Reliable Supply
+                </h4>
+                <p className="text-sm text-white/60">
+                  Fast manufacturing, bulk orders and nationwide logistics support.
+                </p>
+              </div>
+
             </div>
           </div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-white/10">
