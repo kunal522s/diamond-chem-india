@@ -328,8 +328,8 @@ export default function Home() {
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
-                  src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
-                  alt=""
+                  src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg"
+                  alt="Professional Car Detailing"
                   className="h-[260px] sm:h-[420px] lg:h-[520px] w-full object-cover"
                 />
                 <div className="absolute top-4 left-4 lg:top-6 lg:left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
