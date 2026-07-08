@@ -79,7 +79,7 @@ export default function ProductCard({ product }) {
             {/* View Details */}
             <button
               onClick={() => setOpenDetails(true)}
-              className="h-11 w-32 rounded-sm border border-brand-jet text-brand-jet font-semibold hover:bg-brand-jet hover:text-white transition"
+              className="h-11 w-32 rounded-md border border-brand-jet text-brand-jet font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-jet hover:text-white hover:shadow-lg"
             >
               View Details
             </button>
@@ -105,14 +105,14 @@ export default function ProductCard({ product }) {
                   href={product.amazon_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mb-3 flex h-14 w-full items-center justify-between rounded-sm border border-brand-jet bg-brand-jet px-6 text-white font-semibold tracking-wide shadow-sm transition-all duration-300 hover:shadow-lg"
+                  className="group mb-3 flex h-14 w-full items-center justify-between rounded-md border border-brand-jet bg-brand-jet px-6 text-white font-semibold tracking-wide shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-xl"
                 >
                   <div className="flex items-center gap-3">
                     <ShoppingCart className="h-5 w-5" />
                     <span>Buy on Amazon</span>
                   </div>
 
-                  <ArrowUpRight className="h-5 w-5" />
+                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </a>
               )}
 
@@ -121,14 +121,14 @@ export default function ProductCard({ product }) {
                   href={product.flipkart_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 h-14 flex items-center justify-between px-6 rounded-sm bg-[#FACC15] text-black font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+                  className="group mt-3 flex h-14 w-full items-center justify-between rounded-md bg-[#FACC15] px-6 text-black font-semibold shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#EAB308] hover:shadow-xl"
                 >
                   <div className="flex items-center gap-3">
                     <ShoppingBag className="h-5 w-5" />
                     <span>Buy on Flipkart</span>
                   </div>
 
-                  <ArrowUpRight className="h-5 w-5" />
+                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </a>
               )}
 
