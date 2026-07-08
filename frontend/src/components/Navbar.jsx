@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
@@ -6,12 +6,24 @@ import { useState } from "react";
 export default function Navbar() {
   const { totalQuantity, setOpen } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobile, setMobile] = useState(false);
 
   const linkCls = (path) =>
-    `label-tech transition-colors hover:text-brand-orange ${
-      location.pathname === path ? "text-brand-orange" : "text-brand-jet"
+    `label-tech transition-colors hover:text-brand-orange ${location.pathname === path ? "text-brand-orange" : "text-brand-jet"
     }`;
+
+  const goToSection = (id) => {
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: id } });
+    } else {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+
+    setMobile(false);
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-white/85 backdrop-blur-xl">
@@ -29,8 +41,18 @@ export default function Navbar() {
         <nav className="hidden items-center gap-10 md:flex">
           <Link to="/" data-testid="nav-home" className={linkCls("/")}>Home</Link>
           <Link to="/products" data-testid="nav-products" className={linkCls("/products")}>Catalog</Link>
-          <a href="/#about" data-testid="nav-about" className="label-tech text-brand-jet transition-colors hover:text-brand-orange">About</a>
-          <a href="/#contact" data-testid="nav-contact" className="label-tech text-brand-jet transition-colors hover:text-brand-orange">Contact</a>
+          <button
+            onClick={() => goToSection("about")}
+            className="label-tech text-brand-jet transition-colors hover:text-brand-orange"
+          >
+            About
+          </button>
+          <button
+            onClick={() => goToSection("contact")}
+            className="label-tech text-brand-jet transition-colors hover:text-brand-orange"
+          >
+            Contact
+          </button>
           <Link to="/admin/login" data-testid="nav-admin" className="label-tech text-muted-foreground transition-colors hover:text-brand-orange">Admin</Link>
         </nav>
 
@@ -66,8 +88,18 @@ export default function Navbar() {
           <div className="flex flex-col px-4 py-4 gap-4">
             <Link onClick={() => setMobile(false)} to="/" className={linkCls("/")}>Home</Link>
             <Link onClick={() => setMobile(false)} to="/products" className={linkCls("/products")}>Catalog</Link>
-            <a onClick={() => setMobile(false)} href="/#about" className="label-tech">About</a>
-            <a onClick={() => setMobile(false)} href="#contact" className="label-tech">Contact</a>
+            <button
+              onClick={() => goToSection("about")}
+              className="label-tech text-left"
+            >
+              About
+            </button>
+            <button
+              onClick={() => goToSection("contact")}
+              className="label-tech text-left"
+            >
+              Contact
+            </button>
             <Link onClick={() => setMobile(false)} to="/admin/login" className="label-tech">Admin</Link>
           </div>
         </div>

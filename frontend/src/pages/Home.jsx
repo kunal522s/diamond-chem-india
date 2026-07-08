@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { api } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +9,8 @@ import { ArrowRight, Shield, Truck, Award, Factory } from "lucide-react";
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("/products").then((r) => {
@@ -16,6 +18,19 @@ export default function Home() {
       setFeatured(r.data.filter((p) => p.featured));
     });
   }, []);
+
+  useEffect(() => {
+  if (location.state?.scrollTo) {
+    setTimeout(() => {
+      document.getElementById(location.state.scrollTo)?.scrollIntoView({
+        behavior: "smooth",
+      });
+
+      // state clear kar do
+      navigate(location.pathname, { replace: true, state: {} });
+    }, 100);
+  }
+}, [location, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
