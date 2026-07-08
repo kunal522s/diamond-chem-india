@@ -323,14 +323,14 @@ export default function Home() {
 
             {/* RIGHT IMAGE */}
 
-            <div className="w-full max-w-[500px] justify-self-end">
+            <div className="w-full lg:max-w-[430px] xl:max-w-[460px] justify-self-end">
 
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
                   src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
                   alt="Professional Car Detailing"
-                  className="h-[360px] sm:h-[550px] lg:h-[950px] w-full object-cover"
+                  className="h-[360px] sm:h-[550px] lg:h-[670px] xl:h-[720px] w-full object-cover"
                 />
                 <div className="absolute top-5 left-5 bg-black/75 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3">
 
@@ -370,7 +370,7 @@ export default function Home() {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="bg-brand-orange flex flex-col items-center justify-center gap-2 py-4 lg:py-6 border border-white/10"
+                      className="bg-brand-orange flex flex-col items-center justify-center gap-2 py-3 lg:py-4 border border-white/10"
                     >
                       <item.icon className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
 
