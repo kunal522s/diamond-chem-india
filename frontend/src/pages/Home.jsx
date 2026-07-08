@@ -330,16 +330,18 @@ export default function Home() {
                 <img
                   src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg"
                   alt="Professional Car Detailing"
-                  className="h-[260px] sm:h-[420px] lg:h-[520px] w-full object-cover"
+                  className="min-h-[320px] sm:min-h-[520px] lg:h-[780px] w-full object-cover"
                 />
-                <div className="absolute top-4 left-4 lg:top-6 lg:left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
+                <div className="absolute top-5 left-5 bg-black/70 backdrop-blur-md border border-white/20 px-4 py-3 rounded-lg">
+
                   <div className="font-heading text-3xl font-black text-brand-orange">
                     20+
                   </div>
 
-                  <div className="text-xs uppercase tracking-wider">
+                  <div className="text-[11px] uppercase tracking-[0.2em] text-white/80">
                     Years Experience
                   </div>
+
                 </div>
 
                 <div className="grid grid-cols-2">
