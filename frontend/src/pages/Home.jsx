@@ -176,7 +176,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 md:px-8">
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_.7fr_1.2fr] gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_0.75fr_500px] gap-10 items-start">
 
             {/* LEFT */}
 
@@ -323,22 +323,22 @@ export default function Home() {
 
             {/* RIGHT IMAGE */}
 
-            <div className="lg:sticky lg:top-24">
+            <div className="w-full max-w-[500px] justify-self-end">
 
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
                   src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
                   alt="Professional Car Detailing"
-                  className="min-h-[320px] sm:min-h-[520px] lg:h-[780px] w-full object-cover"
+                  className="h-[360px] sm:h-[550px] lg:h-[950px] w-full object-cover"
                 />
-                <div className="absolute top-5 left-5 bg-black/70 backdrop-blur-md border border-white/20 px-4 py-3 rounded-lg">
+                <div className="absolute top-5 left-5 bg-black/75 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3">
 
-                  <div className="font-heading text-3xl font-black text-brand-orange">
+                  <div className="font-heading text-3xl font-black text-brand-orange leading-none">
                     20+
                   </div>
 
-                  <div className="text-[11px] uppercase tracking-[0.2em] text-white/80">
+                  <div className="mt-1 text-[10px] uppercase tracking-[0.22em] text-white/80">
                     Years Experience
                   </div>
 
