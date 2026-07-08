@@ -265,12 +265,12 @@ export default function Home() {
                 production capacity and nationwide supply.
 
               </p>
-              
+
             </div>
 
             {/* TIMELINE */}
 
-            <div className="relative">
+            <div className="relative pt-4">
 
               <div className="absolute left-[11px] top-0 bottom-0 w-px bg-brand-orange/40"></div>
 
@@ -323,14 +323,14 @@ export default function Home() {
 
             {/* RIGHT IMAGE */}
 
-            <div>
+            <div className="sticky top-24">
 
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
                   src="https://images.pexels.com/photos/3846205/pexels-photo-3846205.jpeg"
                   alt=""
-                  className="h-[520px] w-full object-cover"
+                  className="h-[560px] w-full object-cover"
                 />
                 <div className="absolute top-6 left-6 bg-white text-black px-5 py-4 rounded-lg shadow-xl">
                   <div className="font-heading text-3xl font-black text-brand-orange">
@@ -342,7 +342,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="grid grid grid-cols-2 bg-brand-orange">
+                <div className="grid grid-cols-2">
 
                   {[
                     {
@@ -368,7 +368,7 @@ export default function Home() {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="flex flex-col items-center justify-center gap-2 py-6 border-white/20 border-r last:border-r-0"
+                      className="bg-brand-orange flex flex-col items-center justify-center gap-2 py-8 border border-white/10"
                     >
                       <item.icon className="h-6 w-6 text-white" />
 
