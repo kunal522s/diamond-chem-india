@@ -28,14 +28,14 @@ export default function Home() {
 
           {/* Desktop Image */}
           <img
-            src="/images/home page img.webp"
+            src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
             alt="Hero"
             className="hidden md:block h-full w-full object-cover object-center"
           />
 
           {/* Mobile Image */}
           <img
-            src="/images/home page img.webp"
+            src="/images/bg image mobile.png"
             alt="Hero Mobile"
             className="block md:hidden h-full w-full object-cover object-center"
           />
