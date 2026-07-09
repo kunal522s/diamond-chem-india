@@ -332,7 +332,7 @@ export default function Home() {
                   alt="Professional Car Detailing"
                   className="h-[360px] sm:h-[550px] lg:h-[670px] xl:h-[720px] w-full object-cover"
                 />
-                <div className="absolute top-5 left-5 bg-black/75 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3">
+                <div className="hidden sm:block absolute top-5 left-5 bg-black/75 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3">
 
                   <div className="font-heading text-3xl font-black text-brand-orange leading-none">
                     20+
