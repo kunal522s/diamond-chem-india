@@ -25,6 +25,16 @@ import {
 import { motion } from "framer-motion";
 
 export default function Home() {
+
+  const heroImages = [
+    "/images/hero1.webp",
+    "/images/hero2.webp",
+    "/images/hero3.webp",
+    "/images/hero4.webp",
+  ];
+
+  const [currentImage, setCurrentImage] = useState(0);
+
   const [featured, setFeatured] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,13 +47,29 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+
+    const interval = setInterval(() => {
+
+      setCurrentImage((prev) => {
+
+        if (prev === heroImages.length - 1) return 0;
+
+        return prev + 1;
+
+      });
+
+    }, 4500);
+
+    return () => clearInterval(interval);
+
+  }, []);
+
+  useEffect(() => {
     if (location.state?.scrollTo) {
       setTimeout(() => {
         document.getElementById(location.state.scrollTo)?.scrollIntoView({
           behavior: "smooth",
         });
-
-        // state clear kar do
         navigate(location.pathname, { replace: true, state: {} });
       }, 100);
     }
@@ -55,15 +81,29 @@ export default function Home() {
       <CartDrawer />
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-slate text-white">
+      <section className="relative overflow-hidden bg-brand-slate text-white min-h-screen flex items-center">
         <div className="absolute inset-0">
 
-          {/* Desktop Image */}
-          <img
-            src="https://images.pexels.com/photos/26954168/pexels-photo-26954168.jpeg"
-            alt="Hero"
-            className="hidden md:block h-full w-full object-cover object-center"
-          />
+          {/* Desktop Slideshow */}
+
+          <div className="hidden md:block absolute inset-0 overflow-hidden">
+
+            {heroImages.map((image, index) => (
+
+              <img
+                key={image}
+                src={image}
+                alt="Hero"
+                className={`absolute inset-0 h-full w-full object-cover object-center transition-all duration-[1800ms] ease-in-out
+      ${currentImage === index
+                    ? "opacity-100 scale-110 animate-heroZoom"
+                    : "opacity-0 scale-100"
+                  }`}
+              />
+
+            ))}
+
+          </div>
 
           {/* Mobile Image */}
           <img
@@ -71,20 +111,55 @@ export default function Home() {
             alt="Hero Mobile"
             className="block md:hidden h-full w-full object-cover object-center"
           />
+          <div className="absolute -top-32 -left-20 h-[420px] w-[420px] rounded-full bg-brand-orange/20 blur-[150px] animate-heroGlow"></div>
+
+          <div className="absolute bottom-0 right-0 h-[380px] w-[380px] rounded-full bg-orange-500/20 blur-[170px] animate-heroGlow"></div>
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/65 to-black/80 md:bg-gradient-to-r md:from-black/75 md:via-black/40 md:to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/10"></div>
 
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+          {[...Array(10)].map((_, i) => (
+            <motion.span
+              key={i}
+              className="absolute rounded-full bg-white/20"
+              style={{
+                width: Math.random() * 4 + 2,
+                height: Math.random() * 4 + 2,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [-10, -40],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 4,
+                repeat: Infinity,
+                delay: Math.random() * 4,
+              }}
+            />
+          ))}
         </div>
-        <div className="relative container mx-auto px-4 md:px-8 py-24 md:py-32">
-          <div className="max-w-3xl animate-fade-up">
-            <div className="inline-flex items-center gap-2 border border-brand-orange/40 bg-brand-orange/10 px-3 py-1 rounded-sm mb-6">
+        <div className="relative container mx-auto px-4 md:px-8 py-20 md:py-24">
+          <motion.div
+            className="max-w-3xl"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .9 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: .2 }}
+              className="inline-flex items-center gap-2 border border-brand-orange/40 bg-brand-orange/10 backdrop-blur-xl px-4 py-2 rounded-full mb-6 shadow-[0_0_30px_rgba(249,115,22,.25)]"
+            >
               <span className="h-1.5 w-1.5 bg-brand-orange rounded-full" />
               <span className="label-tech text-brand-orange">B2B Dealer Portal · India</span>
-            </div>
+            </motion.div>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] uppercase tracking-tight">
               Industrial-grade<br />
-              <span className="text-brand-orange">car & bike</span><br />
+              <span className="text-brand-orange drop-shadow-[0_0_18px_#ff7a12]">car & bike</span><br />
               care chemicals
             </h1>
             <p className="mt-6 text-lg text-white/90 max-w-xl">
@@ -94,7 +169,7 @@ export default function Home() {
               <Link
                 to="/products"
                 data-testid="hero-shop-btn"
-                className="group inline-flex items-center gap-2 bg-brand-orange px-6 py-3.5 rounded-sm font-semibold transition-all hover:bg-brand-orangeDark"
+                className="group inline-flex items-center gap-2 bg-brand-orange px-7 py-4 rounded-xl font-semibold transition-all duration-500 hover:bg-brand-orangeDark hover:scale-105 hover:shadow-[0_15px_40px_rgba(249,115,22,.45)]"
               >
                 Browse Catalog
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -102,27 +177,27 @@ export default function Home() {
               <a
                 href="#about"
                 data-testid="hero-about-btn"
-                className="inline-flex items-center gap-2 border border-white/30 px-6 py-3.5 rounded-sm font-semibold hover:bg-white hover:text-brand-jet transition-all"
+                className="inline-flex items-center gap-2 border border-white/30 px-7 py-4 rounded-xl font-semibold transition-all duration-500 hover:bg-white hover:text-brand-jet hover:scale-105"
               >
                 Learn More
               </a>
             </div>
 
             <div className="mt-14 grid grid-cols-3 gap-6 max-w-xl border-t border-white/15 pt-8">
-              <div>
-                <div className="font-heading text-3xl font-bold">20+</div>
+              <div className="transition-all duration-500 hover:-translate-y-2">
+                <div className="font-heading text-3xl font-bold text-white drop-shadow-[0_0_12px_rgba(249,115,22,.45)]">20+</div>
                 <div className="label-tech text-white/60 mt-1">Years</div>
               </div>
-              <div>
-                <div className="font-heading text-3xl font-bold">800+</div>
+              <div className="transition-all duration-500 hover:-translate-y-2">
+                <div className="font-heading text-3xl font-bold text-white drop-shadow-[0_0_12px_rgba(249,115,22,.45)]">800+</div>
                 <div className="label-tech text-white/60 mt-1">Dealers</div>
               </div>
-              <div>
-                <div className="font-heading text-3xl font-bold">40+</div>
+              <div className="transition-all duration-500 hover:-translate-y-2">
+                <div className="font-heading text-3xl font-bold text-white drop-shadow-[0_0_12px_rgba(249,115,22,.45)]">40+</div>
                 <div className="label-tech text-white/60 mt-1">Products</div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
