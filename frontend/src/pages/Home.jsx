@@ -172,9 +172,10 @@ export default function Home() {
       {/* ABOUT */}
       <section
         id="about"
-        className="bg-[#101010] text-white py-24 overflow-hidden"
+        className="relative bg-[#101010] text-white py-24 overflow-hidden"
       >
-        <div className="container mx-auto px-4 md:px-8">
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,#ffffff_1px,transparent_1px)] bg-[length:28px_28px]" />
+        <div className="relative container mx-auto px-4 md:px-8">
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_.7fr_430px] gap-10 items-start">
 
@@ -197,15 +198,15 @@ export default function Home() {
                 <br />
                 Excellence
                 <br />
-                <span className="text-brand-orange">
+                <span className="bg-gradient-to-r from-brand-orange via-orange-400 to-yellow-300 bg-clip-text text-transparent">
                   Since 2006
                 </span>
               </h2>
 
               <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
 
-                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
-                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
+                <div className="group border border-white/10 rounded-xl p-5 text-center transition-all duration-500 hover:border-brand-orange hover:-translate-y-2 hover:bg-white/[0.03] hover:shadow-[0_15px_35px_rgba(255,106,0,.18)]">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange transition-transform duration-500 group-hover:scale-110">
                     20+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -213,8 +214,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
-                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
+                <div className="group border border-white/10 rounded-xl p-5 text-center transition-all duration-500 hover:border-brand-orange hover:-translate-y-2 hover:bg-white/[0.03] hover:shadow-[0_15px_35px_rgba(255,106,0,.18)]">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange transition-transform duration-500 group-hover:scale-110">
                     800+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -222,8 +223,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
-                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
+                <div className="group border border-white/10 rounded-xl p-5 text-center transition-all duration-500 hover:border-brand-orange hover:-translate-y-2 hover:bg-white/[0.03] hover:shadow-[0_15px_35px_rgba(255,106,0,.18)]">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange transition-transform duration-500 group-hover:scale-110">
                     40+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -231,8 +232,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="border border-white/10 rounded-lg p-4 sm:p-5 text-center">
-                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange">
+                <div className="group border border-white/10 rounded-xl p-5 text-center transition-all duration-500 hover:border-brand-orange hover:-translate-y-2 hover:bg-white/[0.03] hover:shadow-[0_15px_35px_rgba(255,106,0,.18)]">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange transition-transform duration-500 group-hover:scale-110">
                     5T+
                   </div>
                   <div className="label-tech mt-2 text-white/60">
@@ -242,7 +243,7 @@ export default function Home() {
 
               </div>
 
-              <p className="mt-8 text-white/70 text-sm sm:text-base leading-7">
+              <p className="mt-8 text-white/65 text-[15px] leading-8 max-w-xl">
 
                 Diamond Chem India is a leading manufacturer of premium
                 automotive care chemicals supplying detailing studios,
@@ -250,7 +251,7 @@ export default function Home() {
 
               </p>
 
-              <p className="mt-6 text-white/60 text-sm sm:text-base leading-7">
+              <p className="mt-6 text-white/60 text-[15px] leading-8 max-w-xl">
 
                 Every formulation is manufactured using carefully selected
                 raw materials and strict quality standards to deliver
@@ -258,7 +259,7 @@ export default function Home() {
 
               </p>
 
-              <p className="mt-6 text-white/60 text-sm sm:text-base leading-7">
+              <p className="mt-6 text-white/60 text-[15px] leading-8 max-w-xl">
 
                 With two decades of manufacturing experience we continue
                 expanding our dealer network while maintaining reliable
@@ -272,7 +273,7 @@ export default function Home() {
 
             <div className="relative pt-2 lg:pt-4">
 
-              <div className="absolute left-[11px] top-0 bottom-0 w-px bg-brand-orange/40"></div>
+              <div className="absolute left-[11px] top-0 bottom-0 w-px bg-gradient-to-b from-brand-orange via-brand-orange/50 to-transparent"></div>
 
               {[
                 {
@@ -298,21 +299,21 @@ export default function Home() {
               ].map((item) => (
                 <div
                   key={item.year}
-                  className="relative pl-10 pb-10"
+                  className="group relative pl-10 pb-10"
                 >
-                  <div className="absolute left-0 top-1 h-6 w-6 rounded-full border-2 border-brand-orange bg-[#101010] flex items-center justify-center">
+                  <div className="absolute left-0 top-1 h-6 w-6 rounded-full border-2 border-brand-orange bg-[#101010] flex items-center justify-center transition-all duration-500 group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(255,106,0,.7)]">
                     <div className="h-2.5 w-2.5 rounded-full bg-brand-orange"></div>
                   </div>
 
-                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange leading-none">
+                  <div className="font-heading text-3xl sm:text-4xl font-black text-brand-orange leading-none transition-all duration-300 group-hover:text-white">
                     {item.year}
                   </div>
 
-                  <div className="font-semibold mt-1">
+                  <div className="font-semibold mt-1 transition-colors duration-300 group-hover:text-brand-orange">
                     {item.title}
                   </div>
 
-                  <p className="text-white/55 text-sm leading-6 mt-2">
+                  <p className="text-white/55 text-sm leading-6 mt-2 transition-colors duration-300 group-hover:text-white/80">
                     {item.desc}
                   </p>
 
@@ -325,14 +326,14 @@ export default function Home() {
 
             <div className="w-full lg:max-w-[430px] xl:max-w-[460px] justify-self-end">
 
-              <div className="relative overflow-hidden border border-white/10 rounded-lg">
+              <div className="group relative overflow-hidden rounded-xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,.45)] transition-all duration-500 hover:border-brand-orange/40">
 
                 <img
                   src="https://images.pexels.com/photos/20042055/pexels-photo-20042055.jpeg"
                   alt="Professional Car Detailing"
-                  className="h-[360px] sm:h-[550px] lg:h-[670px] xl:h-[720px] w-full object-cover"
+                  className="h-[360px] sm:h-[550px] lg:h-[670px] xl:h-[720px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="hidden sm:block absolute top-5 left-5 bg-black/75 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3">
+                <div className="hidden sm:block absolute top-5 left-5 bg-black/75 backdrop-blur-xl border border-white/20 rounded-xl px-4 py-3 transition-all duration-500 group-hover:bg-black/90">
 
                   <div className="font-heading text-3xl font-black text-brand-orange leading-none">
                     20+
@@ -370,11 +371,11 @@ export default function Home() {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="bg-brand-orange flex flex-col items-center justify-center gap-2 py-3 lg:py-4 border border-white/10"
+                      className="group bg-brand-orange flex flex-col items-center justify-center gap-2 py-3 lg:py-4 border border-white/10 transition-all duration-300 hover:bg-[#ff7a12] hover:-translate-y-1"
                     >
-                      <item.icon className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
+                      <item.icon className="h-5 w-5 lg:h-6 lg:w-6 text-white transition-transform duration-300 group-hover:scale-125" />
 
-                      <div className="text-xs lg:text-sm font-semibold">
+                      <div className="text-xs lg:text-sm font-semibold transition-all duration-300 group-hover:tracking-wide">
                         {item.title}
                       </div>
 
