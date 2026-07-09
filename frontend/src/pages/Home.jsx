@@ -328,7 +328,7 @@ export default function Home() {
               <div className="relative overflow-hidden border border-white/10 rounded-lg">
 
                 <img
-                  src="https://images.pexels.com/photos/4489732/pexels-photo-4489732.jpeg"
+                  src="https://images.pexels.com/photos/20042055/pexels-photo-20042055.jpeg"
                   alt="Professional Car Detailing"
                   className="h-[360px] sm:h-[550px] lg:h-[670px] xl:h-[720px] w-full object-cover"
                 />
