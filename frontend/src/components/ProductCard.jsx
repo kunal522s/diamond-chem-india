@@ -33,7 +33,7 @@ export default function ProductCard({ product }) {
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
             loading="lazy"
           />
-          <div className="absolute left-4 top-4 rounded-full bg-black/85 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white backdrop-blur-md">
+          <div className="absolute top-3 left-3 bg-brand-jet text-white px-2 py-1 label-tech rounded-sm">
             {product.category}
           </div>
         </div>
