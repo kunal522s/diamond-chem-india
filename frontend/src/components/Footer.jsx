@@ -1,5 +1,6 @@
 import {
   Phone,
+  Mail,
   MapPin,
   MessageCircle,
   ArrowUpRight,
@@ -111,6 +112,23 @@ export default function Footer() {
                   </div>
 
                   <Phone className="h-5 w-5 text-brand-orange group-hover:rotate-12 transition" />
+                </a>
+
+                <a
+                  href="mailto:diamondchemindia@gmail.com"
+                  className="group flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4 transition hover:-translate-y-1 hover:border-brand-orange hover:bg-white/10 hover:shadow-[0_0_35px_rgba(255,122,0,.12)]"
+                >
+                  <div>
+                    <p className="text-xs text-white/40 uppercase">
+                      Email
+                    </p>
+
+                    <p className="mt-1 text-sm font-medium break-all">
+                      diamondchemindia@gmail.com
+                    </p>
+                  </div>
+
+                  <Mail className="h-5 w-5 text-brand-orange transition group-hover:rotate-12" />
                 </a>
 
                 <a
