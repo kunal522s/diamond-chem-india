@@ -150,10 +150,6 @@ export default function Footer() {
             © {new Date().getFullYear()} Diamond Chem India. All Rights Reserved.
           </p>
 
-          <p className="tracking-[0.3em] uppercase">
-            Made For Professional Detailing
-          </p>
-
         </div>
       </div>
     </footer>
