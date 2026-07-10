@@ -81,7 +81,7 @@ export default function ProductCard({ product }) {
               onClick={() => setOpenDetails(true)}
               className="h-11 w-32 rounded-md border border-brand-jet text-brand-jet font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-jet hover:text-white hover:shadow-lg"
             >
-              View Details
+              View Detail
             </button>
 
             {/* Add */}
