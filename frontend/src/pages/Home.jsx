@@ -23,11 +23,13 @@ import {
   Headset,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import AnimatedText from "@/components/AnimatedText";
 
 export default function Home() {
 
   const heroImages = [
     "/images/hero1.webp",
+    "/images/hero6.webp",
     "/images/hero2.webp",
     "/images/hero3.webp",
     "/images/hero4.webp",
@@ -157,11 +159,98 @@ export default function Home() {
               <span className="h-1.5 w-1.5 bg-brand-orange rounded-full" />
               <span className="label-tech text-brand-orange">B2B Dealer Portal · India</span>
             </motion.div>
-            <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] uppercase tracking-tight">
-              Industrial-grade<br />
-              <span className="text-brand-orange drop-shadow-[0_0_18px_#ff7a12]">car & bike</span><br />
-              care chemicals
-            </h1>
+            <motion.h1
+              className="font-heading text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.05] uppercase tracking-tight"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.035,
+                  },
+                },
+              }}
+            >
+              {"Industrial-Grade".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      y: 35,
+                      filter: "blur(10px)",
+                    },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      filter: "blur(0px)",
+                    },
+                  }}
+                  transition={{
+                    duration: 0.45,
+                  }}
+                  className="inline-block will-change-transform"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+
+              <br />
+
+              <span className="text-brand-orange drop-shadow-[0_0_18px_#ff7a12]">
+
+                {"CAR & BIKE".split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    variants={{
+                      hidden: {
+                        opacity: 0,
+                        y: 35,
+                        filter: "blur(10px)",
+                      },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                      },
+                    }}
+                    transition={{
+                      duration: 0.45,
+                    }}
+                    className="inline-block will-change-transform"
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+
+              </span>
+
+              <br />
+
+              {"CARE CHEMICALS".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      y: 35,
+                      filter: "blur(10px)",
+                    },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      filter: "blur(0px)",
+                    },
+                  }}
+                  transition={{
+                    duration: 0.45,
+                  }}
+                  className="inline-block will-change-transform"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.h1>
             <p className="mt-6 text-lg text-white/90 max-w-xl">
               Wholesale supply of dashboard polish, tyre polish, car polish and interior cleaners — built for detailing studios, fleet workshops and retail dealers.
             </p>
@@ -169,17 +258,26 @@ export default function Home() {
               <Link
                 to="/products"
                 data-testid="hero-shop-btn"
-                className="group inline-flex items-center gap-2 bg-brand-orange px-7 py-4 rounded-xl font-semibold transition-all duration-500 hover:bg-brand-orangeDark hover:scale-105 hover:shadow-[0_15px_40px_rgba(249,115,22,.45)]"
+                className="group relative overflow-hidden inline-flex items-center gap-2 bg-brand-orange px-7 py-4 rounded-xl font-semibold transition-all duration-500 hover:scale-105 hover:bg-brand-orangeDark hover:shadow-[0_18px_50px_rgba(249,115,22,.55)] active:scale-95"
               >
-                Browse Catalog
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-1000 group-hover:translate-x-full"></span>
+                <span className="relative z-10">
+                  Browse Catalog
+                </span>
+                <ArrowRight className="relative z-10 h-4 w-4 transition-all duration-500 group-hover:translate-x-2 group-hover:scale-110" />
               </Link>
               <a
                 href="#about"
                 data-testid="hero-about-btn"
-                className="inline-flex items-center gap-2 border border-white/30 px-7 py-4 rounded-xl font-semibold transition-all duration-500 hover:bg-white hover:text-brand-jet hover:scale-105"
+                className="group relative overflow-hidden inline-flex items-center gap-2 border border-white/30 bg-white/5 backdrop-blur-md px-7 py-4 rounded-xl font-semibold transition-all duration-500 hover:bg-white hover:text-brand-jet hover:scale-105 active:scale-95"
               >
-                Learn More
+
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full"></span>
+
+                <span className="relative z-10">
+                  Learn More
+                </span>
+
               </a>
             </div>
 
