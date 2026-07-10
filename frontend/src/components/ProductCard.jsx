@@ -18,9 +18,9 @@ export default function ProductCard({ product }) {
     <>
       <article
         data-testid={`product-card-${product.id}`}
-        className="card-tech flex flex-col rounded-sm overflow-hidden"
+        className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/8 bg-white transition-all duration-500 hover:-translate-y-2 hover:border-black/15 hover:shadow-[0_22px_60px_rgba(0,0,0,.12)]"
       >
-        <div className="relative aspect-square overflow-hidden border-b border-border bg-secondary">
+        <div className="relative aspect-square overflow-hidden border-b border-black/5 bg-[#fafafa]">
           <img
             src={
               product.image?.startsWith("http")
@@ -30,10 +30,10 @@ export default function ProductCard({ product }) {
                   : product.image
             }
             alt={product.name}
-            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
             loading="lazy"
           />
-          <div className="absolute top-3 left-3 bg-brand-jet text-white px-2 py-1 label-tech rounded-sm">
+          <div className="absolute left-4 top-4 rounded-full bg-black/85 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-white backdrop-blur-md">
             {product.category}
           </div>
         </div>
