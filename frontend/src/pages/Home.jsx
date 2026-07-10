@@ -28,8 +28,8 @@ import AnimatedText from "@/components/AnimatedText";
 export default function Home() {
 
   const heroImages = [
-    "/images/hero1.webp",
     "/images/hero6.webp",
+    "/images/hero1.webp",
     "/images/hero2.webp",
     "/images/hero3.webp",
     "/images/hero4.webp",
