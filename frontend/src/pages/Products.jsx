@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { api } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,22 +8,31 @@ import ProductCard from "@/components/ProductCard";
 
 const CATEGORIES = [
   { key: "all", label: "All Products" },
-  { key: "car", label: "Car Care" },
-  { key: "bike", label: "Bike Care" },
-  { key: "interior", label: "Interior" },
+  { key: "Car Care", label: "Car Care" },
+  { key: "Bike Care", label: "Bike Care" },
+  { key: "Interior", label: "Interior" },
 ];
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [cat, setCat] = useState("all");
   const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     api.get("/products").then((r) => {
-      console.log("PRODUCT API:", r.data);
       setProducts(r.data);
     });
-  }, []);
+
+    const category = searchParams.get("category");
+
+    if (category) {
+      setCat(category);
+    } else {
+      setCat("all");
+    }
+
+  }, [searchParams]);
 
   const filtered = products
     .filter((p) => cat === "all" || p.category === cat)
@@ -50,8 +60,8 @@ export default function Products() {
                 data-testid={`filter-${c.key}`}
                 onClick={() => setCat(c.key)}
                 className={`label-tech rounded-sm border px-4 py-2 transition-all ${cat === c.key
-                    ? "bg-brand-jet text-white border-brand-jet"
-                    : "bg-white text-brand-jet border-border hover:border-brand-jet"
+                  ? "bg-brand-jet text-white border-brand-jet"
+                  : "bg-white text-brand-jet border-border hover:border-brand-jet"
                   }`}
               >
                 {c.label}

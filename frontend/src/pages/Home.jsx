@@ -321,6 +321,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SHOP BY CATEGORY */}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4 md:px-8">
+
+          <div className="mb-10 text-center md:text-left">
+            <div className="label-tech text-brand-orange mb-2">
+              OUR CATEGORIES
+            </div>
+
+            <h2 className="font-heading text-3xl md:text-5xl font-bold uppercase">
+              Shop by Category
+            </h2>
+
+            <p className="mt-3 text-muted-foreground">
+              Explore our premium car & bike care products.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+
+            <Link
+              to="/products"
+              className="group rounded-3xl border bg-white p-6 text-center shadow-sm hover:-translate-y-2 hover:shadow-2xl transition"
+            >
+              <img
+                src="/images/hero6.webp"
+                className="w-32 h-32 md:w-36 md:h-36 mx-auto rounded-full object-cover border-[6px] border-white shadow-lg transition-all duration-300 group-hover:border-brand-orange group-hover:scale-110"
+              />
+              <h3 className="mt-5 font-bold">ALL PRODUCTS</h3>
+            </Link>
+
+            <Link
+              to="/products?category=Car Care"
+              className="group rounded-3xl border bg-white p-6 text-center shadow-sm hover:-translate-y-2 hover:shadow-2xl transition"
+            >
+              <img
+                src="/images/car-care.jpg"
+                className="w-32 h-32 md:w-36 md:h-36 mx-auto rounded-full object-cover border-[6px] border-white shadow-lg transition-all duration-300 group-hover:border-brand-orange group-hover:scale-110"
+              />
+              <h3 className="mt-5 font-bold">CAR CARE</h3>
+            </Link>
+
+            <Link
+              to="/products?category=Bike Care"
+              className="group rounded-3xl border bg-white p-6 text-center shadow-sm hover:-translate-y-2 hover:shadow-2xl transition"
+            >
+              <img
+                src="/images/bike-care.jpg"
+                className="w-32 h-32 md:w-36 md:h-36 mx-auto rounded-full object-cover border-[6px] border-white shadow-lg transition-all duration-300 group-hover:border-brand-orange group-hover:scale-110"
+              />
+              <h3 className="mt-5 font-bold">BIKE CARE</h3>
+            </Link>
+
+            <Link
+              to="/products?category=Interior"
+              className="group rounded-3xl border bg-white p-6 text-center shadow-sm hover:-translate-y-2 hover:shadow-2xl transition"
+            >
+              <img
+                src="/images/interior.jpg"
+                className="w-32 h-32 md:w-36 md:h-36 mx-auto rounded-full object-cover border-[6px] border-white shadow-lg transition-all duration-300 group-hover:border-brand-orange group-hover:scale-110"
+              />
+              <h3 className="mt-5 font-bold">INTERIOR</h3>
+            </Link>
+
+          </div>
+
+        </div>
+      </section>
+
       {/* FEATURED PRODUCTS */}
       <section className="container mx-auto px-4 md:px-8 py-20" data-testid="featured-section">
         <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
