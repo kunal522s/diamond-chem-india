@@ -160,6 +160,7 @@ export default function EditProduct() {
                         onChange={handleChange}
                         className="w-full border p-3 rounded-sm"
                     >
+                        <option value="">Select Category</option>
                         <option value="Car Care">Car Care</option>
                         <option value="Bike Care">Bike Care</option>
                         <option value="Interior">Interior</option>
