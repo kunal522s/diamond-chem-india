@@ -3,6 +3,7 @@ import { ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const { totalQuantity, setOpen } = useCart();
@@ -58,17 +59,30 @@ export default function Navbar() {
         className={`container mx-auto flex items-center justify-between px-4 md:px-8 transition-all duration-500 ${scrolled ? "h-16" : "h-[72px]"
           }`}
       >
-        <Link to="/" data-testid="nav-logo" className="flex items-center gap-2">
+        <Link
+          to="/"
+          data-testid="nav-logo"
+          className="flex items-center gap-3"
+        >
+          {/* D Icon */}
           <div
             className={`flex items-center justify-center rounded-xl bg-brand-jet shadow-lg transition-all duration-500 hover:rotate-6 hover:scale-110 ${scrolled ? "h-9 w-9" : "h-11 w-11"
               }`}
           >
-            <span className="font-heading text-xl font-black text-brand-orange">D</span>
+            <span className="font-heading text-xl font-black text-brand-orange">
+              D
+            </span>
           </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-heading text-lg font-bold tracking-tight">DIAMOND CHEM</span>
-            <span className="label-tech text-[11px] tracking-[0.25em] text-gray-500">INDIA · B2B PORTAL</span>
-          </div>
+
+          {/* Brand Logo */}
+          <img
+            src={logo}
+            alt="Diamond Chem India"
+            className={`w-auto transition-all duration-300 ${scrolled
+                ? "h-8 md:h-9"
+                : "h-10 md:h-11"
+              }`}
+          />
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
