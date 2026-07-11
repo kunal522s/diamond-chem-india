@@ -120,14 +120,18 @@ export default function AddProduct() {
                         required
                     />
 
-                    <input
+                    <select
                         name="category"
-                        placeholder="Category"
                         value={form.category}
                         onChange={handleChange}
                         className="w-full border border-border p-3 rounded-sm"
                         required
-                    />
+                    >
+                        <option value="">Select Category</option>
+                        <option value="Car Care">Car Care</option>
+                        <option value="Bike Care">Bike Care</option>
+                        <option value="Interior">Interior</option>
+                    </select>
 
                     <div className="space-y-3">
 

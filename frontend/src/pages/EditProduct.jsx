@@ -154,12 +154,16 @@ export default function EditProduct() {
                         className="w-full border p-3 rounded-sm"
                     />
 
-                    <input
+                    <select
                         name="category"
                         value={form.category}
                         onChange={handleChange}
                         className="w-full border p-3 rounded-sm"
-                    />
+                    >
+                        <option value="Car Care">Car Care</option>
+                        <option value="Bike Care">Bike Care</option>
+                        <option value="Interior">Interior</option>
+                    </select>
 
                     <div>
                         <label className="font-semibold mb-2 block">
