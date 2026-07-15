@@ -109,7 +109,7 @@ export default function Home() {
 
           {/* Mobile Image */}
           <img
-            src="/images/bg image mobile.png"
+            src="/images/hero7.png"
             alt="Hero Mobile"
             className="block md:hidden h-full w-full object-cover object-center"
           />

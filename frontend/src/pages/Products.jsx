@@ -38,6 +38,12 @@ export default function Products() {
     .filter((p) => cat === "all" || p.category === cat)
     .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
+  const banners = {
+    "Car Care": "/images/car-care-banner.png",
+    "Bike Care": "/images/bike-care-banner.png",
+    "Interior": "/images/interior-care-banner.png",
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
@@ -52,6 +58,15 @@ export default function Products() {
       </section>
 
       <section className="container mx-auto px-4 md:px-8 py-10 flex-1">
+        {cat !== "all" && (
+          <div className="mb-8 overflow-hidden rounded-2xl shadow-xl border border-border aspect-[1920/450]">
+            <img
+              src={banners[cat]}
+              alt={cat}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
         <div className="flex flex-wrap items-center gap-3 mb-8 justify-between">
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((c) => (
