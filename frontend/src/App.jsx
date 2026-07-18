@@ -14,6 +14,7 @@ import RequireAdmin from "@/components/RequireAdmin.jsx";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import ScrollToTop from "@/components/ScrollToTop";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
                 }
               />
             </Routes>
+            <WhatsAppFloat />
           </BrowserRouter>
           <Toaster richColors position="top-right" />
         </CartProvider>
