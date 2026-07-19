@@ -213,9 +213,42 @@ export default function AdminDashboard() {
 
                     <div className="lg:col-span-2">
                       <div className="label-tech text-muted-foreground">Total</div>
-                      <div className="font-heading text-2xl font-bold mt-0.5">₹{o.total_amount.toLocaleString()}</div>
-                      <div className="label-tech text-muted-foreground mt-2">{o.total_quantity} items</div>
-                      <div className="label-tech text-muted-foreground mt-2">{new Date(o.date).toLocaleDateString()}</div>
+
+                      <div className="font-heading text-2xl font-bold mt-0.5">
+                        ₹{o.total_amount.toLocaleString()}
+                      </div>
+
+                      <div className="label-tech text-muted-foreground mt-2">
+                        {o.total_quantity} items
+                      </div>
+
+                      <div className="mt-3">
+                        <div className="label-tech text-muted-foreground">
+                          Payment Status
+                        </div>
+
+                        <span
+                          className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-semibold ${o.payment_status === "Paid"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-yellow-100 text-yellow-700"
+                            }`}
+                        >
+                          {o.payment_status}
+                        </span>
+                      </div>
+
+                      {o.payment_method && (
+                        <div className="text-sm mt-2">
+                          <span className="text-muted-foreground">
+                            Method:
+                          </span>{" "}
+                          <strong>{o.payment_method}</strong>
+                        </div>
+                      )}
+
+                      <div className="label-tech text-muted-foreground mt-3">
+                        {new Date(o.date).toLocaleDateString()}
+                      </div>
                     </div>
 
                     <div className="lg:col-span-3 flex flex-col gap-2">
