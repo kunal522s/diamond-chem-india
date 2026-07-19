@@ -6,6 +6,8 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
+import { Link } from "react-router-dom";
+
 import { FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
@@ -192,11 +194,43 @@ export default function Footer() {
 
             </div>
           </div>
-          <div className="mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
+          <div className="mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
 
-            <p>
+            <p className="text-sm text-white/40">
               © {new Date().getFullYear()} Diamond Chem India. All Rights Reserved.
             </p>
+
+            <div className="flex flex-wrap justify-center gap-5 text-sm">
+
+              <Link
+                to="/privacy-policy"
+                className="text-white/50 hover:text-brand-orange transition"
+              >
+                Privacy Policy
+              </Link>
+
+              <Link
+                to="/terms-and-conditions"
+                className="text-white/50 hover:text-brand-orange transition"
+              >
+                Terms & Conditions
+              </Link>
+
+              <Link
+                to="/refund-policy"
+                className="text-white/50 hover:text-brand-orange transition"
+              >
+                Refund Policy
+              </Link>
+
+              <Link
+                to="/shipping-policy"
+                className="text-white/50 hover:text-brand-orange transition"
+              >
+                Shipping Policy
+              </Link>
+
+            </div>
 
           </div>
         </div>
