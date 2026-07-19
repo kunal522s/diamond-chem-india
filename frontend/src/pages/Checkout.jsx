@@ -6,7 +6,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import { toast } from "sonner";
-import { Check, ArrowLeft } from "lucide-react";
+import {
+  Check,
+  ArrowLeft,
+  Wallet,
+  Building2,
+  CreditCard,
+} from "lucide-react";
+import Select from "react-select";
+import { State, City } from "country-state-city";
 
 export default function Checkout() {
   const { items, totalAmount, totalQuantity, clear } = useCart();
@@ -16,6 +24,10 @@ export default function Checkout() {
     phone: "",
     email: "",
     address: "",
+
+    state: null,
+    city: null,
+    pincode: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -24,24 +36,36 @@ export default function Checkout() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.dealer_name || !form.phone || !form.address) {
+
+    if (!form.dealer_name || !form.phone || !form.address || !form.city || !form.state || !form.pincode) {
       toast.error("Please fill all dealer details");
       return;
     }
+
     if (!/^[6-9]\d{9}$/.test(form.phone)) {
       toast.error("Please enter a valid 10-digit mobile number.");
       return;
     }
+
+    if (!/^\d{6}$/.test(form.pincode)) {
+      toast.error("Please enter a valid 6-digit pincode.");
+      return;
+    }
+
     if (items.length === 0) {
       toast.error("Cart is empty");
       return;
     }
+
     setSubmitting(true);
+
     try {
-      const res = await api.post("/orders", {
+      const { data } = await api.post("/payment/create-order", {
         dealer_name: form.dealer_name,
         phone: form.phone,
-        address: form.address,
+        email: form.email,
+        address: `${form.address}, ${form.city.label}, ${form.state.label} - ${form.pincode}`,
+
         products: items.map((i) => ({
           product_id: i.product_id,
           product_name: i.product_name,
@@ -50,11 +74,67 @@ export default function Checkout() {
           quantity: i.quantity,
         })),
       });
-      setSuccess(res.data);
-      clear();
-      toast.success("Order placed successfully!");
+
+      const options = {
+        key: data.key,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Diamond Chem India",
+        description: "Order Payment",
+        order_id: data.order_id,
+
+        handler: async function (response) {
+          try {
+            const verify = await api.post("/payment/verify", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+
+              dealer_name: form.dealer_name,
+              phone: form.phone,
+              email: form.email,
+              address: `${form.address}, ${form.city.label}, ${form.state.label} - ${form.pincode}`,
+
+              products: items.map((i) => ({
+                product_id: i.product_id,
+                product_name: i.product_name,
+                variant_size: i.variant_size,
+                variant_price: i.variant_price,
+                quantity: i.quantity,
+              })),
+            });
+
+            setSuccess(verify.data);
+            clear();
+
+            toast.success("Payment Successful");
+          } catch (err) {
+            console.error(err);
+            toast.error("Payment verification failed.");
+          }
+        },
+
+        prefill: {
+          name: form.dealer_name,
+          email: form.email,
+          contact: form.phone,
+        },
+
+        theme: {
+          color: "#f97316",
+        },
+      };
+
+      const razor = new window.Razorpay(options);
+
+      razor.on("payment.failed", function () {
+        toast.error("Payment Failed");
+      });
+
+      razor.open();
     } catch (err) {
-      toast.error("Failed to place order. Try again.");
+      console.error(err);
+      toast.error("Unable to start payment.");
     } finally {
       setSubmitting(false);
     }
@@ -69,12 +149,16 @@ export default function Checkout() {
           <div className="h-20 w-20 rounded-full bg-brand-orange/15 flex items-center justify-center mb-6">
             <Check className="h-10 w-10 text-brand-orange" />
           </div>
-          <div className="label-tech text-brand-orange mb-2">Order Confirmed</div>
+          <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            ✅ Payment Successful
+          </div>
           <h1 className="font-heading text-4xl md:text-5xl font-black uppercase">Thank you, {success.dealer_name}!</h1>
-          <p className="mt-3 text-muted-foreground max-w-lg">
-            Your wholesale order has been received. Our team will contact you shortly for dispatch confirmation.
+          <p className="mt-4 text-muted-foreground max-w-xl leading-7">
+            Thank you for placing your order with <strong>Diamond Chem India</strong>.
+            Your payment has been received successfully and our sales team will
+            verify your order before dispatch.
           </p>
-          <div className="mt-8 border border-border rounded-sm p-6 w-full max-w-md text-left bg-secondary">
+          <div className="mt-10 border border-border rounded-xl shadow-sm p-6 w-full max-w-lg text-left bg-white">
             <div className="flex justify-between mb-2">
               <span className="label-tech text-muted-foreground">Order ID</span>
               <span className="font-mono text-xs" data-testid="order-success-id">{success.id.slice(0, 12)}</span>
@@ -83,9 +167,32 @@ export default function Checkout() {
               <span className="label-tech text-muted-foreground">Total Items</span>
               <span className="font-semibold">{success.total_quantity}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="label-tech text-muted-foreground">Total Amount</span>
-              <span className="font-heading font-bold text-xl">₹{success.total_amount.toLocaleString()}</span>
+            <div className="flex justify-between mb-3">
+              <span className="label-tech text-muted-foreground">
+                Total Amount
+              </span>
+
+              <span className="font-heading font-bold text-xl">
+                ₹{success.total_amount.toLocaleString()}
+              </span>
+            </div>
+
+            <hr className="my-4" />
+
+            <div className="space-y-2 text-sm">
+
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Dealer</span>
+                <span>{success.dealer_name}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Payment</span>
+                <span className="text-green-600 font-semibold">
+                  Successful
+                </span>
+              </div>
+
             </div>
           </div>
           <Link
@@ -93,7 +200,7 @@ export default function Checkout() {
             data-testid="continue-shopping-btn"
             className="mt-8 inline-flex items-center gap-2 bg-brand-jet text-white px-6 py-3 rounded-sm font-semibold hover:bg-brand-orange transition-all"
           >
-            Continue Shopping
+            Continue Shopping →
           </Link>
         </section>
         <Footer />
@@ -153,8 +260,21 @@ export default function Checkout() {
         {/* FORM */}
         <form onSubmit={submit} className="lg:col-span-3 order-1 lg:order-2 space-y-5">
           <div className="border border-border rounded-sm p-6">
-            <div className="label-tech text-brand-orange mb-1">Step 1</div>
-            <h2 className="font-heading text-2xl font-bold mb-6">Dealer Information</h2>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <div className="label-tech text-brand-orange mb-1">
+                  Step 1
+                </div>
+
+                <h2 className="font-heading text-2xl font-bold">
+                  Dealer Information
+                </h2>
+              </div>
+
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-2 rounded-md text-sm font-semibold">
+                🔒 100% Secure Checkout
+              </div>
+            </div>
 
             <div className="grid gap-5">
               <div>
@@ -205,7 +325,13 @@ export default function Checkout() {
                 />
               </div>
               <div>
-                <label className="label-tech text-muted-foreground mb-2 block">Delivery Address *</label>
+                <label className="label-tech text-muted-foreground mb-2 block">
+                  Delivery Address *
+                </label>
+
+                <p className="text-xs text-muted-foreground mb-2">
+                  Enter complete shop or warehouse address for delivery.
+                </p>
                 <textarea
                   data-testid="dealer-address-input"
                   required
@@ -216,6 +342,118 @@ export default function Checkout() {
                   className="w-full rounded-sm border border-border px-4 py-3 focus:outline-none focus:border-brand-jet resize-none"
                 />
               </div>
+              <div className="grid md:grid-cols-2 gap-5">
+
+                <div>
+                  <label className="label-tech text-muted-foreground mb-2 block">
+                    State *
+                  </label>
+
+                  <Select
+                    placeholder="Select State"
+                    options={State.getStatesOfCountry("IN").map((s) => ({
+                      value: s.isoCode,
+                      label: s.name,
+                    }))}
+
+                    value={form.state}
+
+                    onChange={(value) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        state: value,
+                        city: null,
+                      }))
+                    }
+
+                    isSearchable
+                  />
+                </div>
+
+                <div>
+                  <label className="label-tech text-muted-foreground mb-2 block">
+                    City *
+                  </label>
+
+                  <Select
+                    placeholder="Select City"
+
+                    options={
+                      form.state
+                        ? City.getCitiesOfState("IN", form.state.value).map((c) => ({
+                          value: c.name,
+                          label: c.name,
+                        }))
+                        : []
+                    }
+
+                    value={form.city}
+
+                    onChange={(value) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        city: value,
+                      }))
+                    }
+
+                    isDisabled={!form.state}
+                    isSearchable
+                  />
+                </div>
+
+
+              </div>
+
+              <div>
+                <label className="label-tech text-muted-foreground mb-2 block">
+                  Pincode *
+                </label>
+
+                <>
+                  <input
+                    required
+                    inputMode="numeric"
+                    maxLength={6}
+                    value={form.pincode}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        pincode: e.target.value.replace(/\D/g, ""),
+                      }))
+                    }
+                    placeholder="e.g. 245101"
+                    className="w-full rounded-sm border border-border px-4 py-3 focus:outline-none focus:border-brand-jet"
+                  />
+
+                  <p className="text-xs text-muted-foreground mt-2">
+                    We currently deliver across India.
+                  </p>
+                </>
+              </div>
+            </div>
+          </div>
+
+          <div className="border border-border rounded-sm p-5 bg-secondary">
+            <h3 className="font-semibold mb-3">
+              Accepted Payment Methods
+            </h3>
+
+            <div className="flex flex-wrap gap-3">
+              <span className="border rounded-md px-3 py-2 text-sm">
+                💳 Cards
+              </span>
+
+              <span className="border rounded-md px-3 py-2 text-sm">
+                <Wallet className="h-4 w-4 inline mr-2" /> UPI
+              </span>
+
+              <span className="border rounded-md px-3 py-2 text-sm">
+                <Building2 className="h-4 w-4 inline mr-2" /> Net Banking
+              </span>
+
+              <span className="border rounded-md px-3 py-2 text-sm">
+                <CreditCard className="h-4 w-4 inline mr-2" /> Wallets
+              </span>
             </div>
           </div>
 
@@ -225,8 +463,14 @@ export default function Checkout() {
             disabled={submitting || items.length === 0}
             className="w-full bg-brand-orange text-white py-4 rounded-sm font-bold uppercase tracking-wider hover:bg-brand-orangeDark transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {submitting ? "Placing Order..." : `Place Order · ₹${totalAmount.toLocaleString()}`}
+            {submitting
+              ? "Redirecting to Secure Payment..."
+              : `Proceed to Pay ₹${totalAmount.toLocaleString()}`}
           </button>
+
+          <p className="mt-3 text-center text-xs text-muted-foreground">
+            🔒 Secure payment powered by Razorpay. Your payment details are encrypted and protected.
+          </p>
         </form>
       </section>
 

@@ -16,6 +16,9 @@ from fastapi.staticfiles import StaticFiles
 import shutil
 import cloudinary
 import cloudinary.uploader
+import razorpay
+import hmac
+import hashlib
 
 
 ROOT_DIR = Path(__file__).parent
@@ -26,6 +29,12 @@ cloudinary.config(
     api_key=os.environ['API_KEY'],
     api_secret=os.environ['API_SECRET'],
     secure=True,
+)
+razorpay_client = razorpay.Client(
+    auth=(
+        os.environ["RAZORPAY_KEY_ID"],
+        os.environ["RAZORPAY_KEY_SECRET"],
+    )
 )
 
 # MongoDB connection
@@ -92,19 +101,56 @@ class OrderCreate(BaseModel):
     phone: str
     email: Optional[str] = None
     address: str
+
+    payment_method: Optional[str] = None
+
     products: List[OrderItem]
 
-class Order(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+class RazorpayOrderCreate(BaseModel):
     dealer_name: str
     phone: str
     email: Optional[str] = None
     address: str
     products: List[OrderItem]
+
+class Order(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+
+    dealer_name: str
+    phone: str
+    email: Optional[str] = None
+    address: str
+
+    products: List[OrderItem]
+
     total_quantity: int
     total_amount: float
-    status: str = "Pending"  # Pending, Packed, Dispatched, Delivered
-    date: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+    # Order Status
+    status: str = "Pending"
+
+    # Payment Details
+    payment_status: str = "Pending"      # Pending | Paid | Failed | Refunded
+    payment_method: Optional[str] = None # UPI | Card | Net Banking | Wallet
+    payment_id: Optional[str] = None
+    razorpay_order_id: Optional[str] = None
+    razorpay_signature: Optional[str] = None
+
+    date: str = Field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+
+class PaymentVerify(BaseModel):
+    razorpay_order_id: str
+    razorpay_payment_id: str
+    razorpay_signature: str
+
+    dealer_name: str
+    phone: str
+    email: Optional[str] = None
+    address: str
+
+    products: List[OrderItem]
 
 class StatusUpdate(BaseModel):
     status: str
@@ -211,19 +257,101 @@ async def delete_product(
 
     return {"message": "Product deleted successfully"}
 
-@api_router.post("/orders", response_model=Order)
-async def create_order(payload: OrderCreate):
-    total_quantity = sum(p.quantity for p in payload.products)
-    total_amount = sum(p.quantity * p.variant_price for p in payload.products)
+@api_router.post("/payment/create-order")
+async def create_razorpay_order(payload: RazorpayOrderCreate):
+
+    total_amount = sum(
+        p.quantity * p.variant_price
+        for p in payload.products
+    )
+
+    razorpay_order = razorpay_client.order.create({
+        "amount": int(total_amount * 100),   # paisa
+        "currency": "INR",
+        "payment_capture": 1
+    })
+
+    return {
+        "key": os.environ["RAZORPAY_KEY_ID"],
+        "amount": int(total_amount * 100),
+        "currency": "INR",
+        "order_id": razorpay_order["id"],
+        "dealer_name": payload.dealer_name,
+        "phone": payload.phone,
+        "email": payload.email,
+        "address": payload.address,
+        "products": payload.products,
+    }
+
+@api_router.post("/payment/verify")
+async def verify_payment(payload: PaymentVerify):
+
+    generated_signature = hmac.new(
+        os.environ["RAZORPAY_KEY_SECRET"].encode(),
+        (
+            payload.razorpay_order_id
+            + "|"
+            + payload.razorpay_payment_id
+        ).encode(),
+        hashlib.sha256,
+    ).hexdigest()
+
+    if generated_signature != payload.razorpay_signature:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid payment signature"
+        )
+
+    total_quantity = sum(
+        p.quantity
+        for p in payload.products
+    )
+
+    total_amount = sum(
+        p.quantity * p.variant_price
+        for p in payload.products
+    )
+
     order = Order(
         dealer_name=payload.dealer_name,
         phone=payload.phone,
         email=payload.email,
         address=payload.address,
+
         products=payload.products,
+
         total_quantity=total_quantity,
         total_amount=total_amount,
+
+        payment_status="Paid",
+        payment_method="Razorpay",
+
+        payment_id=payload.razorpay_payment_id,
+        razorpay_order_id=payload.razorpay_order_id,
+        razorpay_signature=payload.razorpay_signature,
     )
+
+    await db.orders.insert_one(order.model_dump())
+
+    return order
+
+@api_router.post("/orders", response_model=Order)
+async def create_order(payload: OrderCreate):
+    total_quantity = sum(p.quantity for p in payload.products)
+    total_amount = sum(p.quantity * p.variant_price for p in payload.products)
+    order = Order(
+    dealer_name=payload.dealer_name,
+    phone=payload.phone,
+    email=payload.email,
+    address=payload.address,
+
+    payment_method=payload.payment_method,
+
+    products=payload.products,
+
+    total_quantity=total_quantity,
+    total_amount=total_amount,
+)
     doc = order.model_dump()
     await db.orders.insert_one(doc)
     return order
