@@ -121,8 +121,8 @@ export default function Checkout() {
 
         prefill: {
           name: form.dealer_name,
-          email: form.email,
           contact: form.phone,
+          ...(form.email && { email: form.email }),
         },
 
         theme: {
