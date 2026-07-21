@@ -20,8 +20,35 @@ import razorpay
 import hmac
 import hashlib
 
+from fastapi.responses import FileResponse
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Table,
+    TableStyle,
+    Paragraph,
+    Spacer,
+    Image,
+)
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+from reportlab.lib.colors import HexColor
+from reportlab.pdfbase import pdfmetrics
+
 
 ROOT_DIR = Path(__file__).parent
+
+PDF_DIR = ROOT_DIR / "invoices"
+LOGO_PATH = ROOT_DIR / "logo.png"
+ORANGE = HexColor("#ff6b00")
+BLACK = HexColor("#151515")
+LIGHT = HexColor("#f8f8f8")
+GRAY = HexColor("#666666")
+GREEN = HexColor("#2db84d")
+PDF_DIR.mkdir(exist_ok=True)
 load_dotenv(ROOT_DIR / '.env')
 
 cloudinary.config(
@@ -92,8 +119,12 @@ class ProductUpdate(BaseModel):
 class OrderItem(BaseModel):
     product_id: str
     product_name: str
+
+    product_image: str = ""
+
     variant_size: str
     variant_price: float
+
     quantity: int
 
 class OrderCreate(BaseModel):
@@ -358,8 +389,23 @@ async def create_order(payload: OrderCreate):
 
 @api_router.get("/orders", response_model=List[Order])
 async def list_orders(_: str = Depends(verify_admin)):
-    items = await db.orders.find({}, {"_id": 0}).sort("date", -1).to_list(1000)
+    items = await db.orders.find(
+        {},
+        {"_id": 0}
+    ).sort("date", -1).to_list(1000)
+
     return items
+
+
+@api_router.get("/my-orders/{phone}", response_model=List[Order])
+async def get_my_orders(phone: str):
+
+    orders = await db.orders.find(
+        {"phone": phone},
+        {"_id": 0}
+    ).sort("date", -1).to_list(100)
+
+    return orders
 
 @api_router.put("/orders/{order_id}", response_model=Order)
 async def update_order_status(order_id: str, payload: StatusUpdate, _: str = Depends(verify_admin)):
@@ -397,6 +443,119 @@ async def admin_stats(_: str = Depends(verify_admin)):
         "pending_orders": pending,
         "delivered_orders": delivered,
     }
+
+@api_router.get("/invoice/{order_id}")
+async def download_invoice(order_id: str):
+
+    order = await db.orders.find_one(
+        {"id": order_id},
+        {"_id": 0}
+    )
+
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+
+    pdf_file = PDF_DIR / f"Invoice_{order_id[:8]}.pdf"
+
+    styles = getSampleStyleSheet()
+
+    doc = SimpleDocTemplate(str(pdf_file))
+
+    elements = []
+
+    elements.append(
+        Paragraph("<b><font size=18>Diamond Chem India</font></b>", styles["Title"])
+    )
+
+    elements.append(
+        Paragraph("INVOICE", styles["Heading2"])
+    )
+
+    elements.append(Spacer(1, 15))
+
+    elements.append(
+        Paragraph(f"<b>Invoice No:</b> {order['id'][:12]}", styles["Normal"])
+    )
+
+    elements.append(
+        Paragraph(f"<b>Date:</b> {order['date'][:10]}", styles["Normal"])
+    )
+
+    elements.append(
+        Paragraph(f"<b>Dealer:</b> {order['dealer_name']}", styles["Normal"])
+    )
+
+    elements.append(
+        Paragraph(f"<b>Phone:</b> {order['phone']}", styles["Normal"])
+    )
+
+    elements.append(
+        Paragraph(f"<b>Address:</b> {order['address']}", styles["Normal"])
+    )
+
+    elements.append(Spacer(1, 20))
+
+    data = [
+        ["Product", "Size", "Qty", "Price", "Amount"]
+    ]
+
+    for item in order["products"]:
+
+        amount = item["quantity"] * item["variant_price"]
+
+        data.append([
+            item["product_name"],
+            item["variant_size"],
+            str(item["quantity"]),
+            f"Rs. {item['variant_price']:.2f}",
+            f"Rs. {amount:.2f}",
+        ])
+
+    data.append([
+        "",
+        "",
+        "",
+        "Grand Total",
+        f"Rs. {order['total_amount']:.2f}",
+    ])
+
+    table = Table(data)
+
+    table.setStyle(
+        TableStyle([
+            ("BACKGROUND", (0,0), (-1,0), colors.orange),
+            ("TEXTCOLOR", (0,0), (-1,0), colors.white),
+
+            ("GRID", (0,0), (-1,-1), 1, colors.grey),
+
+            ("FONTNAME", (0,0), (-1,0), "Helvetica-Bold"),
+
+            ("BACKGROUND", (0,1), (-1,-2), colors.whitesmoke),
+
+            ("BACKGROUND", (-2,-1), (-1,-1), colors.beige),
+
+            ("BOTTOMPADDING", (0,0), (-1,0), 10),
+        ])
+    )
+
+    elements.append(table)
+
+    elements.append(Spacer(1, 25))
+
+    elements.append(
+        Paragraph(
+            "<b>Payment Status:</b> Paid",
+            styles["Normal"],
+        )
+    )
+
+    doc.build(elements)
+
+    return FileResponse(
+        pdf_file,
+        filename=f"Invoice_{order_id[:8]}.pdf",
+        media_type="application/pdf",
+    )
 
 @api_router.post("/auth/login")
 async def admin_login(payload: LoginRequest):

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { api } from "@/lib/api";
@@ -69,6 +69,7 @@ export default function Checkout() {
         products: items.map((i) => ({
           product_id: i.product_id,
           product_name: i.product_name,
+          product_image: i.image,
           variant_size: i.variant_size,
           variant_price: i.variant_price,
           quantity: i.quantity,
@@ -98,13 +99,17 @@ export default function Checkout() {
               products: items.map((i) => ({
                 product_id: i.product_id,
                 product_name: i.product_name,
+                product_image: i.image,
                 variant_size: i.variant_size,
                 variant_price: i.variant_price,
                 quantity: i.quantity,
               })),
             });
 
+            localStorage.setItem("customerPhone", form.phone);
+
             setSuccess(verify.data);
+
             clear();
 
             toast.success("Payment Successful");
@@ -139,6 +144,12 @@ export default function Checkout() {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      window.scrollTo(0, 0);
+    }
+  }, [success]);
 
   if (success) {
     return (
@@ -195,13 +206,33 @@ export default function Checkout() {
 
             </div>
           </div>
-          <Link
-            to="/products"
-            data-testid="continue-shopping-btn"
-            className="mt-8 inline-flex items-center gap-2 bg-brand-jet text-white px-6 py-3 rounded-sm font-semibold hover:bg-brand-orange transition-all"
-          >
-            Continue Shopping →
-          </Link>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+
+            <Link
+              to="/products"
+              data-testid="continue-shopping-btn"
+              className="inline-flex items-center justify-center gap-2 bg-brand-jet text-white px-6 py-3 rounded-sm font-semibold hover:bg-brand-orange transition-all"
+            >
+              Continue Shopping →
+            </Link>
+
+            <Link
+              to="/my-orders"
+              className="inline-flex items-center justify-center gap-2 border border-brand-orange text-brand-orange px-6 py-3 rounded-sm font-semibold hover:bg-brand-orange hover:text-white transition-all"
+            >
+              📦 View My Orders
+            </Link>
+
+            <a
+              href={`http://127.0.0.1:8000/api/invoice/${success.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-sm font-semibold hover:bg-green-700 transition-all"
+            >
+              📄 Download Invoice
+            </a>
+
+          </div>
         </section>
         <Footer />
       </div>
@@ -233,12 +264,43 @@ export default function Checkout() {
               <>
                 <ul className="divide-y divide-border">
                   {items.map((i) => (
-                    <li key={i.key} className="py-3 flex justify-between gap-2">
-                      <div>
-                        <div className="font-semibold text-sm">{i.product_name}</div>
-                        <div className="label-tech text-muted-foreground">{i.variant_size} × {i.quantity}</div>
+                    <li
+                      key={i.key}
+                      className="py-4 flex items-center justify-between gap-4"
+                    >
+                      <div className="flex items-center gap-4">
+
+                        <img
+                          src={
+                            i.image?.startsWith("http")
+                              ? i.image
+                              : i.image?.startsWith("/uploads")
+                                ? `http://127.0.0.1:8000${i.image}`
+                                : i.image
+                          }
+                          alt={i.product_name}
+                          className="w-16 h-16 rounded-lg border object-contain bg-white p-1"
+                        />
+
+                        <div>
+                          <div className="font-semibold text-sm">
+                            {i.product_name}
+                          </div>
+
+                          <div className="text-xs text-gray-500">
+                            {i.variant_size}
+                          </div>
+
+                          <div className="text-sm text-gray-500 mt-1">
+                            Qty : {i.quantity}
+                          </div>
+                        </div>
+
                       </div>
-                      <div className="font-semibold">₹{(i.variant_price * i.quantity).toLocaleString()}</div>
+
+                      <div className="font-bold text-green-600">
+                        ₹{(i.variant_price * i.quantity).toLocaleString()}
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -283,8 +345,13 @@ export default function Checkout() {
                   data-testid="dealer-name-input"
                   required
                   value={form.dealer_name}
-                  onChange={onChange("dealer_name")}
-                  placeholder="e.g. Sharma Auto Detailing"
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      dealer_name: e.target.value.toUpperCase(),
+                    }))
+                  }
+                  placeholder="e.g. SHARMA AUTO DETAILING"
                   className="w-full rounded-sm border border-border px-4 py-3 focus:outline-none focus:border-brand-jet"
                 />
               </div>

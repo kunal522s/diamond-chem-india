@@ -79,15 +79,30 @@ export default function Navbar() {
             src={logo}
             alt="Diamond Chem India"
             className={`w-auto transition-all duration-300 ${scrolled
-                ? "h-8 md:h-9"
-                : "h-10 md:h-11"
+              ? "h-8 md:h-9"
+              : "h-10 md:h-11"
               }`}
           />
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
           <Link to="/" data-testid="nav-home" className={linkCls("/")}>Home</Link>
-          <Link to="/products" data-testid="nav-products" className={linkCls("/products")}>Catalog</Link>
+          <>
+            <Link
+              to="/products"
+              data-testid="nav-products"
+              className={linkCls("/products")}
+            >
+              Catalog
+            </Link>
+
+            <Link
+              to="/my-orders"
+              className={linkCls("/my-orders")}
+            >
+              My Orders
+            </Link>
+          </>
           <button
             onClick={() => goToSection("about")}
             className="label-tech text-brand-jet transition-colors hover:text-brand-orange"
@@ -158,13 +173,23 @@ export default function Navbar() {
                 Home
               </Link>
 
-              <Link
-                to="/products"
-                onClick={() => setMobile(false)}
-                className={linkCls("/products")}
-              >
-                Catalog
-              </Link>
+              <>
+                <Link
+                  to="/products"
+                  onClick={() => setMobile(false)}
+                  className={linkCls("/products")}
+                >
+                  Catalog
+                </Link>
+
+                <Link
+                  to="/my-orders"
+                  onClick={() => setMobile(false)}
+                  className={linkCls("/my-orders")}
+                >
+                  My Orders
+                </Link>
+              </>
 
               <button
                 onClick={() => goToSection("about")}

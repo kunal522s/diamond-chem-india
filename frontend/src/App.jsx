@@ -19,6 +19,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsConditions from "@/pages/TermsConditions";
 import RefundPolicy from "@/pages/RefundPolicy";
 import ShippingPolicy from "@/pages/ShippingPolicy";
+import MyOrders from "@/pages/MyOrders";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               <Route path="/terms-and-conditions" element={<TermsConditions />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/shipping-policy" element={<ShippingPolicy />} />
+              <Route path="/my-orders" element={<MyOrders />} />
               <Route path="/admin/login" element={<AdminLogin />} />
 
               <Route
