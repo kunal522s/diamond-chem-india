@@ -162,7 +162,43 @@ export default function MyOrders() {
                     </div>
 
                     {loading && (
-                        <p className="mt-8">Loading...</p>
+                        <div className="mt-8 space-y-6 animate-pulse">
+                            {[1, 2, 3].map((item) => (
+                                <div
+                                    key={item}
+                                    className="bg-white border rounded-xl p-6 shadow-sm"
+                                >
+                                    <div className="flex flex-col lg:flex-row gap-6">
+                                        <div className="flex items-center gap-4 flex-1">
+                                            <div className="w-16 h-16 bg-gray-200 rounded-xl"></div>
+
+                                            <div className="flex-1 space-y-3">
+                                                <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                                                <div className="h-4 w-24 bg-gray-200 rounded"></div>
+                                                <div className="h-3 w-40 bg-gray-200 rounded"></div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex-1 space-y-3">
+                                            <div className="h-4 w-24 bg-gray-200 rounded"></div>
+                                            <div className="h-5 w-40 bg-gray-200 rounded"></div>
+                                            <div className="h-3 w-28 bg-gray-200 rounded"></div>
+                                        </div>
+
+                                        <div className="flex-1 space-y-3">
+                                            <div className="h-4 w-28 bg-gray-200 rounded"></div>
+                                            <div className="h-8 w-24 bg-gray-200 rounded"></div>
+                                            <div className="h-3 w-20 bg-gray-200 rounded"></div>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <div className="h-10 w-28 bg-gray-200 rounded-xl"></div>
+                                            <div className="h-10 w-28 bg-gray-200 rounded-xl"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     )}
 
                     {!loading && orders.length > 0 && (
@@ -520,8 +556,8 @@ ${order.payment_status === "Paid"
 
                                                                                 <div
                                                                                     className={`w-10 h-10 rounded-full border-2 flex items-center justify-center z-10 ${active
-                                                                                            ? "bg-green-600 border-green-600 text-white"
-                                                                                            : "bg-white border-gray-300 text-gray-400"
+                                                                                        ? "bg-green-600 border-green-600 text-white"
+                                                                                        : "bg-white border-gray-300 text-gray-400"
                                                                                         }`}
                                                                                 >
                                                                                     {active ? (
