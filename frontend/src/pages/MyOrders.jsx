@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ShieldCheck, Headphones } from "lucide-react";
 import {
     Clock3,
     Package,
@@ -45,16 +46,15 @@ const STEPS = [
         title: "Delivered",
         icon: House,
     },
+
 ];
 
 export default function MyOrders() {
     const [phone, setPhone] = useState("");
-
     const [orders, setOrders] = useState([]);
-
     const [loading, setLoading] = useState(false);
     const [openOrder, setOpenOrder] = useState(null);
-
+    const [hasSearched, setHasSearched] = useState(false);
     const fetchOrders = async () => {
 
         if (!phone) return;
@@ -88,8 +88,8 @@ export default function MyOrders() {
         localStorage.setItem("customerPhone", phone);
 
         await fetchOrders();
-
-        setPhone(""); // Search ke baad input clear
+        setHasSearched(true);
+        setPhone("");
 
     };
 
@@ -102,7 +102,13 @@ export default function MyOrders() {
             setLoading(true);
 
             api.get(`/my-orders/${savedPhone}`)
-                .then((res) => setOrders(res.data))
+                .then((res) => {
+                    setOrders(res.data);
+
+                    if (res.data.length > 0) {
+                        setHasSearched(true);
+                    }
+                })
                 .catch(() => setOrders([]))
                 .finally(() => setLoading(false));
 
@@ -536,8 +542,54 @@ ${order.payment_status === "Paid"
 
                     )}
 
-                </div>
+                    {/* Need Help */}
+                    {hasSearched && orders.length > 0 && (
+                        <div className="mt-8 bg-white border rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+                            <div className="flex items-center gap-4">
+                                <div className="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-7 h-7 text-brand-orange"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-4z"
+                                        />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M9.5 12l1.5 1.5L14.5 10"
+                                        />
+                                    </svg>
+                                </div>
 
+                                <div>
+                                    <h3 className="text-xl font-bold">Need Help?</h3>
+                                    <p className="text-gray-500">
+                                        Our support team is always here to assist you.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <a
+                                href="tel:+919927873632"
+                                className="inline-flex items-center gap-2 rounded-lg bg-brand-orange px-6 py-3 text-white font-semibold hover:bg-brand-orangeDark transition-colors"
+                            >
+                                <Headphones className="h-5 w-5" />
+                                Contact Support
+                            </a>
+
+                        </div>
+
+                    )}
+                </div>
+                
             </div>
 
             <Footer />
