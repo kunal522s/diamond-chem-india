@@ -15,14 +15,22 @@ const CATEGORIES = [
 
 export default function Products() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [cat, setCat] = useState("all");
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    api.get("/products").then((r) => {
-      setProducts(r.data);
-    });
+    setLoading(true);
+
+    api
+      .get("/products")
+      .then((r) => {
+        setProducts(r.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
     const category = searchParams.get("category");
 
@@ -93,11 +101,25 @@ export default function Products() {
           />
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-24">
+            <div className="h-12 w-12 rounded-full border-4 border-gray-200 border-t-brand-orange animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filtered.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+
+            {filtered.length === 0 && (
+              <div className="py-20 text-center text-muted-foreground">
+                No products match your filters.
+              </div>
+            )}
+          </>
+        )}
         {filtered.length === 0 && (
           <div className="py-20 text-center text-muted-foreground">No products match your filters.</div>
         )}
