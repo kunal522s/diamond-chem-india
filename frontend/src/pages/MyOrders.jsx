@@ -434,18 +434,75 @@ ${order.payment_status === "Paid"
                                                             DELIVERY PROGRESS
                                                         </h3>
 
-                                                        <div className="relative mb-10">
+                                                        <>
+                                                            {/* Desktop Timeline */}
+                                                            <div className="hidden md:block relative mb-10">
 
-                                                            <div className="absolute top-5 left-0 w-full h-1 bg-gray-200 rounded-full"></div>
+                                                                <div className="absolute top-5 left-0 w-full h-1 bg-gray-200 rounded-full"></div>
 
-                                                            <div
-                                                                className="absolute top-5 left-0 h-1 bg-green-600 rounded-full"
-                                                                style={{
-                                                                    width: `${(current / (STEPS.length - 1)) * 100}%`,
-                                                                }}
-                                                            ></div>
+                                                                <div
+                                                                    className="absolute top-5 left-0 h-1 bg-green-600 rounded-full"
+                                                                    style={{
+                                                                        width: `${(current / (STEPS.length - 1)) * 100}%`,
+                                                                    }}
+                                                                ></div>
 
-                                                            <div className="relative grid grid-cols-4 gap-2 md:gap-4">
+                                                                <div className="relative grid grid-cols-4 gap-4">
+
+                                                                    {STEPS.map((step, index) => {
+
+                                                                        const Icon = step.icon;
+                                                                        const active = index <= current;
+
+                                                                        return (
+
+                                                                            <div
+                                                                                key={step.title}
+                                                                                className="flex flex-col items-center"
+                                                                            >
+
+                                                                                <div
+                                                                                    className={`w-12 h-12 rounded-full flex items-center justify-center border-2 ${active
+                                                                                        ? "bg-green-600 border-green-600 text-white"
+                                                                                        : "bg-white border-gray-300 text-gray-400"
+                                                                                        }`}
+                                                                                >
+
+                                                                                    {active ? (
+                                                                                        <CheckCircle2 size={20} />
+                                                                                    ) : (
+                                                                                        <Icon size={20} />
+                                                                                    )}
+
+                                                                                </div>
+
+                                                                                <p
+                                                                                    className={`mt-3 font-medium text-sm ${active
+                                                                                        ? "text-green-700"
+                                                                                        : "text-gray-500"
+                                                                                        }`}
+                                                                                >
+                                                                                    {step.title}
+                                                                                </p>
+
+                                                                                <span className="text-xs text-gray-400 mt-1">
+                                                                                    {active
+                                                                                        ? new Date(order.date).toLocaleDateString()
+                                                                                        : "Waiting"}
+                                                                                </span>
+
+                                                                            </div>
+
+                                                                        );
+
+                                                                    })}
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            {/* Mobile Timeline */}
+                                                            <div className="block md:hidden mb-8">
 
                                                                 {STEPS.map((step, index) => {
 
@@ -456,41 +513,55 @@ ${order.payment_status === "Paid"
 
                                                                         <div
                                                                             key={step.title}
-                                                                            className="flex flex-col items-center"
+                                                                            className="relative flex gap-4 pb-8 last:pb-0"
                                                                         >
 
-                                                                            <div
-                                                                                className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2
-                            ${active
-                                                                                        ? "bg-green-600 border-green-600 text-white"
-                                                                                        : "bg-white border-gray-300 text-gray-400"
-                                                                                    }`}
-                                                                            >
+                                                                            <div className="relative flex flex-col items-center">
 
-                                                                                {active ? (
-                                                                                    <CheckCircle2 size={20} />
-                                                                                ) : (
-                                                                                    <Icon size={20} />
+                                                                                <div
+                                                                                    className={`w-10 h-10 rounded-full border-2 flex items-center justify-center z-10 ${active
+                                                                                            ? "bg-green-600 border-green-600 text-white"
+                                                                                            : "bg-white border-gray-300 text-gray-400"
+                                                                                        }`}
+                                                                                >
+                                                                                    {active ? (
+                                                                                        <CheckCircle2 size={18} />
+                                                                                    ) : (
+                                                                                        <Icon size={18} />
+                                                                                    )}
+                                                                                </div>
+
+                                                                                {index !== STEPS.length - 1 && (
+                                                                                    <div className="absolute top-10 left-1/2 -translate-x-1/2 h-full w-0.5 bg-gray-300"></div>
                                                                                 )}
 
                                                                             </div>
 
-                                                                            <p
-                                                                                className={`mt-2 text-[11px] md:text-sm font-medium ${active
-                                                                                    ? "text-green-700"
-                                                                                    : "text-gray-500"
-                                                                                    }`}
-                                                                            >
-                                                                                {step.title}
-                                                                            </p>
+                                                                            <div className="flex-1 pt-1">
 
-                                                                            <span className="text-[10px] md:text-xs text-gray-400 mt-1">
+                                                                                <h4
+                                                                                    className={`font-semibold ${active
+                                                                                        ? "text-green-700"
+                                                                                        : "text-gray-500"
+                                                                                        }`}
+                                                                                >
+                                                                                    {step.title}
+                                                                                </h4>
 
-                                                                                {active
-                                                                                    ? new Date(order.date).toLocaleDateString()
-                                                                                    : "Waiting"}
+                                                                                <p className="text-xs text-gray-400">
+                                                                                    {active
+                                                                                        ? new Date(order.date).toLocaleDateString(
+                                                                                            "en-GB",
+                                                                                            {
+                                                                                                day: "numeric",
+                                                                                                month: "short",
+                                                                                                year: "numeric",
+                                                                                            }
+                                                                                        )
+                                                                                        : "Waiting"}
+                                                                                </p>
 
-                                                                            </span>
+                                                                            </div>
 
                                                                         </div>
 
@@ -499,8 +570,7 @@ ${order.payment_status === "Paid"
                                                                 })}
 
                                                             </div>
-
-                                                        </div>
+                                                        </>
 
                                                         <h3 className="font-bold tracking-widest text-sm mb-4">
                                                             DELIVERY ADDRESS
