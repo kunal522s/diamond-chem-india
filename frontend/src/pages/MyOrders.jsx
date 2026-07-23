@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { ShieldCheck, Headphones } from "lucide-react";
 import {
     Clock3,
@@ -83,12 +84,17 @@ export default function MyOrders() {
 
     const searchOrders = async () => {
 
-        if (!phone) return;
+        if (!/^[6-9]\d{9}$/.test(phone)) {
+            toast.error("Please enter a valid 10-digit mobile number.");
+            return;
+        }
 
         localStorage.setItem("customerPhone", phone);
 
         await fetchOrders();
+
         setHasSearched(true);
+
         setPhone("");
 
     };
@@ -131,10 +137,13 @@ export default function MyOrders() {
                     <div className="bg-white rounded-sm border p-6 flex gap-3 flex-col md:flex-row">
 
                         <input
-                            type="text"
+                            type="tel"
                             placeholder="Enter Mobile Number"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            maxLength={10}
+                            onChange={(e) =>
+                                setPhone(e.target.value.replace(/\D/g, ""))
+                            }
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                     searchOrders();
@@ -173,7 +182,7 @@ export default function MyOrders() {
                                         className="bg-white border rounded-xl p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
                                     >
 
-                                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-center">
+                                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 md:gap-6 items-center">
 
                                             {/* Order Icon */}
                                             <div className="flex items-center gap-5">
@@ -190,7 +199,7 @@ export default function MyOrders() {
                                                         Order ID
                                                     </p>
 
-                                                    <h3 className="font-bold text-lg break-all">
+                                                    <h3 className="font-bold text-base md:text-lg break-all">
                                                         #{order.id.slice(-8).toUpperCase()}
                                                     </h3>
 
@@ -213,7 +222,7 @@ export default function MyOrders() {
                                                     Dealer
                                                 </p>
 
-                                                <h2 className="font-bold text-xl mt-1">
+                                                <h2 className="font-bold text-lg md:text-xl mt-1">
                                                     {order.dealer_name}
                                                 </h2>
 
@@ -230,7 +239,7 @@ export default function MyOrders() {
                                                     Total Amount
                                                 </p>
 
-                                                <h2 className="text-[30px] font-bold text-green-600 mt-1">
+                                                <h2 className="text-2xl md:text-[30px] font-bold text-green-600 mt-1">
                                                     ₹ {order.total_amount}
                                                 </h2>
 
@@ -244,7 +253,7 @@ export default function MyOrders() {
                                             <div className="flex flex-col gap-3">
 
                                                 <div
-                                                    className={`inline-flex justify-center items-center rounded-xl px-5 py-3 font-semibold
+                                                    className={`inline-flex justify-center items-center rounded-xl px-4 py-2.5 md:px-5 md:py-3 text-sm font-semibold
 ${order.status === "Pending"
                                                             ? "bg-yellow-50 text-yellow-700"
                                                             : order.status === "Packed"
@@ -270,7 +279,7 @@ ${order.status === "Pending"
                                                 </div>
 
                                                 <div
-                                                    className={`inline-flex justify-center items-center rounded-xl px-5 py-3 font-semibold
+                                                    className={`inline-flex justify-center items-center rounded-xl px-4 py-2.5 md:px-5 md:py-3 text-sm font-semibold
 ${order.payment_status === "Paid"
                                                             ? "bg-green-50 text-green-700"
                                                             : order.payment_status === "Pending"
@@ -354,12 +363,12 @@ ${order.payment_status === "Paid"
                                                                         <img
                                                                             src={item.product_image}
                                                                             alt={item.product_name}
-                                                                            className="w-20 h-20 rounded-xl border object-cover"
+                                                                            className="w-16 h-16 md:w-20 md:h-20 rounded-xl border object-cover"
                                                                         />
 
                                                                         <div>
 
-                                                                            <h4 className="text-base font-semibold text-gray-900">
+                                                                            <h4 className="text-sm md:text-base font-semibold text-gray-900">
                                                                                 {item.product_name}
                                                                             </h4>
 
@@ -377,7 +386,7 @@ ${order.payment_status === "Paid"
                                                                             Qty : {item.quantity}
                                                                         </p>
 
-                                                                        <p className="text-2xl font-bold text-green-600 mt-1">
+                                                                        <p className="text-xl md:text-2xl font-bold text-green-600 mt-1">
                                                                             ₹ {Number(item.variant_price) * Number(item.quantity)}
                                                                         </p>
 
@@ -397,7 +406,7 @@ ${order.payment_status === "Paid"
                                                                     Total Items
                                                                 </p>
 
-                                                                <h2 className="text-4xl font-bold">
+                                                                <h2 className="text-3xl md:text-4xl font-bold">
                                                                     {order.products.length}
                                                                 </h2>
 
@@ -409,7 +418,7 @@ ${order.payment_status === "Paid"
                                                                     Total Amount
                                                                 </p>
 
-                                                                <h2 className="text-4xl font-bold text-green-600">
+                                                                <h2 className="text-3xl md:text-4xl font-bold text-green-600">
                                                                     ₹ {order.total_amount}
                                                                 </h2>
 
@@ -436,7 +445,7 @@ ${order.payment_status === "Paid"
                                                                 }}
                                                             ></div>
 
-                                                            <div className="relative grid grid-cols-4 gap-4">
+                                                            <div className="relative grid grid-cols-4 gap-2 md:gap-4">
 
                                                                 {STEPS.map((step, index) => {
 
@@ -451,7 +460,7 @@ ${order.payment_status === "Paid"
                                                                         >
 
                                                                             <div
-                                                                                className={`w-12 h-12 rounded-full flex items-center justify-center border-2
+                                                                                className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2
                             ${active
                                                                                         ? "bg-green-600 border-green-600 text-white"
                                                                                         : "bg-white border-gray-300 text-gray-400"
@@ -467,7 +476,7 @@ ${order.payment_status === "Paid"
                                                                             </div>
 
                                                                             <p
-                                                                                className={`mt-3 font-medium text-sm ${active
+                                                                                className={`mt-2 text-[11px] md:text-sm font-medium ${active
                                                                                     ? "text-green-700"
                                                                                     : "text-gray-500"
                                                                                     }`}
@@ -475,7 +484,7 @@ ${order.payment_status === "Paid"
                                                                                 {step.title}
                                                                             </p>
 
-                                                                            <span className="text-xs text-gray-400 mt-1">
+                                                                            <span className="text-[10px] md:text-xs text-gray-400 mt-1">
 
                                                                                 {active
                                                                                     ? new Date(order.date).toLocaleDateString()
@@ -570,8 +579,8 @@ ${order.payment_status === "Paid"
                                 </div>
 
                                 <div>
-                                    <h3 className="text-xl font-bold">Need Help?</h3>
-                                    <p className="text-gray-500">
+                                    <h3 className="text-lg md:text-xl font-bold">Need Help?</h3>
+                                    <p className="text-sm md:text-base text-gray-500">
                                         Our support team is always here to assist you.
                                     </p>
                                 </div>
@@ -579,7 +588,7 @@ ${order.payment_status === "Paid"
 
                             <a
                                 href="tel:+919927873632"
-                                className="inline-flex items-center gap-2 rounded-lg bg-brand-orange px-6 py-3 text-white font-semibold hover:bg-brand-orangeDark transition-colors"
+                                className="inline-flex w-full md:w-auto justify-center items-center gap-2 rounded-lg bg-brand-orange px-6 py-3 text-white font-semibold hover:bg-brand-orangeDark transition-colors"
                             >
                                 <Headphones className="h-5 w-5" />
                                 Contact Support
@@ -589,7 +598,7 @@ ${order.payment_status === "Paid"
 
                     )}
                 </div>
-                
+
             </div>
 
             <Footer />
