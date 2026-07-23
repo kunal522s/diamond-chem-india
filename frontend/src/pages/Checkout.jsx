@@ -224,7 +224,7 @@ export default function Checkout() {
             </Link>
 
             <a
-              href={`http://127.0.0.1:8000/api/invoice/${success.id}`}
+              href={`/api/invoice/${success.id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-sm font-semibold hover:bg-green-700 transition-all"
