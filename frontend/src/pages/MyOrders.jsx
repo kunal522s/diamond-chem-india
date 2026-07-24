@@ -49,6 +49,28 @@ const STEPS = [
     },
 
 ];
+const formatDate = (date) => {
+    if (!date) return "Waiting";
+    return new Date(date).toLocaleDateString("en-GB");
+};
+
+const formatDateTime = (date) => {
+    if (!date) return "Waiting";
+
+    const d = new Date(date);
+
+    return (
+        <>
+            {d.toLocaleDateString("en-GB")}
+            <br />
+            {d.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+            })}
+        </>
+    );
+};
 
 export default function MyOrders() {
     const [phone, setPhone] = useState("");
@@ -214,6 +236,7 @@ export default function MyOrders() {
                                 return (
 
                                     <div
+                                        id={`order-${order.id}`}
                                         key={order.id}
                                         className="bg-white border rounded-xl p-6 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
                                     >
@@ -235,16 +258,12 @@ export default function MyOrders() {
                                                         Order ID
                                                     </p>
 
-                                                    <h3 className="font-bold text-base md:text-lg break-all">
+                                                    <h3 className="font-bold text-base md:text-lg break-normal whitespace-nowrap">
                                                         #{order.id.slice(-8).toUpperCase()}
                                                     </h3>
 
                                                     <p className="text-gray-500 mt-2 text-sm">
-                                                        {new Date(order.date).toLocaleDateString("en-GB", {
-                                                            day: "numeric",
-                                                            month: "long",
-                                                            year: "numeric",
-                                                        })}
+                                                        {formatDate(order.date)}
                                                     </p>
 
                                                 </div>
@@ -418,11 +437,11 @@ ${order.payment_status === "Paid"
 
                                                                     <div className="text-right">
 
-                                                                        <p className="text-sm text-gray-500">
+                                                                        <p className="text-sm text-gray-500 whitespace-nowrap">
                                                                             Qty : {item.quantity}
                                                                         </p>
 
-                                                                        <p className="text-xl md:text-2xl font-bold text-green-600 mt-1">
+                                                                        <p className="text-xl md:text-2xl font-bold text-green-600 mt-1 whitespace-nowrap">
                                                                             ₹ {Number(item.variant_price) * Number(item.quantity)}
                                                                         </p>
 
@@ -522,9 +541,49 @@ ${order.payment_status === "Paid"
                                                                                 </p>
 
                                                                                 <span className="text-xs text-gray-400 mt-1">
-                                                                                    {active
-                                                                                        ? new Date(order.date).toLocaleDateString()
-                                                                                        : "Waiting"}
+                                                                                    {step.title === "Pending" && order.pending_date ? (
+                                                                                        <>
+                                                                                            {new Date(order.pending_date).toLocaleDateString("en-GB")}
+                                                                                            <br />
+                                                                                            {new Date(order.pending_date).toLocaleTimeString("en-US", {
+                                                                                                hour: "2-digit",
+                                                                                                minute: "2-digit",
+                                                                                                hour12: true,
+                                                                                            })}
+                                                                                        </>
+                                                                                    ) : step.title === "Packed" && order.packed_date ? (
+                                                                                        <>
+                                                                                            {new Date(order.packed_date).toLocaleDateString("en-GB")}
+                                                                                            <br />
+                                                                                            {new Date(order.packed_date).toLocaleTimeString("en-US", {
+                                                                                                hour: "2-digit",
+                                                                                                minute: "2-digit",
+                                                                                                hour12: true,
+                                                                                            })}
+                                                                                        </>
+                                                                                    ) : step.title === "Dispatched" && order.dispatched_date ? (
+                                                                                        <>
+                                                                                            {new Date(order.dispatched_date).toLocaleDateString("en-GB")}
+                                                                                            <br />
+                                                                                            {new Date(order.dispatched_date).toLocaleTimeString("en-US", {
+                                                                                                hour: "2-digit",
+                                                                                                minute: "2-digit",
+                                                                                                hour12: true,
+                                                                                            })}
+                                                                                        </>
+                                                                                    ) : step.title === "Delivered" && order.delivered_date ? (
+                                                                                        <>
+                                                                                            {new Date(order.delivered_date).toLocaleDateString("en-GB")}
+                                                                                            <br />
+                                                                                            {new Date(order.delivered_date).toLocaleTimeString("en-US", {
+                                                                                                hour: "2-digit",
+                                                                                                minute: "2-digit",
+                                                                                                hour12: true,
+                                                                                            })}
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        "Waiting"
+                                                                                    )}
                                                                                 </span>
 
                                                                             </div>
@@ -585,16 +644,15 @@ ${order.payment_status === "Paid"
                                                                                 </h4>
 
                                                                                 <p className="text-xs text-gray-400">
-                                                                                    {active
-                                                                                        ? new Date(order.date).toLocaleDateString(
-                                                                                            "en-GB",
-                                                                                            {
-                                                                                                day: "numeric",
-                                                                                                month: "short",
-                                                                                                year: "numeric",
-                                                                                            }
-                                                                                        )
-                                                                                        : "Waiting"}
+                                                                                    {step.title === "Pending"
+                                                                                        ? formatDateTime(order.pending_date)
+                                                                                        : step.title === "Packed"
+                                                                                            ? formatDateTime(order.packed_date)
+                                                                                            : step.title === "Dispatched"
+                                                                                                ? formatDateTime(order.dispatched_date)
+                                                                                                : step.title === "Delivered"
+                                                                                                    ? formatDateTime(order.delivered_date)
+                                                                                                    : "Waiting"}
                                                                                 </p>
 
                                                                             </div>
@@ -619,7 +677,18 @@ ${order.payment_status === "Paid"
                                                         </div>
 
                                                         <button
-                                                            onClick={() => setOpenOrder(null)}
+                                                            onClick={() => {
+                                                                setOpenOrder(null);
+
+                                                                setTimeout(() => {
+                                                                    document
+                                                                        .getElementById(`order-${order.id}`)
+                                                                        ?.scrollIntoView({
+                                                                            behavior: "smooth",
+                                                                            block: "start",
+                                                                        });
+                                                                }, 100);
+                                                            }}
                                                             className="mt-8 w-full h-14 border-2 border-brand-orange rounded-xl text-brand-orange font-medium hover:bg-brand-orange hover:text-white transition flex items-center justify-center gap-2"
                                                         >
 

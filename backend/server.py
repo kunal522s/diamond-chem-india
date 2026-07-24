@@ -11,6 +11,7 @@ import uuid
 import jwt
 import bcrypt
 from datetime import datetime, timezone, timedelta
+from pymongo import ReturnDocument
 from fastapi import UploadFile, File
 from fastapi.staticfiles import StaticFiles
 import shutil
@@ -170,6 +171,10 @@ class Order(BaseModel):
     date: str = Field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
+    pending_date: Optional[str] = None
+    packed_date: Optional[str] = None
+    dispatched_date: Optional[str] = None
+    delivered_date: Optional[str] = None
 
 class PaymentVerify(BaseModel):
     razorpay_order_id: str
@@ -344,23 +349,25 @@ async def verify_payment(payload: PaymentVerify):
     )
 
     order = Order(
-        dealer_name=payload.dealer_name,
-        phone=payload.phone,
-        email=payload.email,
-        address=payload.address,
+    dealer_name=payload.dealer_name,
+    phone=payload.phone,
+    email=payload.email,
+    address=payload.address,
 
-        products=payload.products,
+    products=payload.products,
 
-        total_quantity=total_quantity,
-        total_amount=total_amount,
+    total_quantity=total_quantity,
+    total_amount=total_amount,
 
-        payment_status="Paid",
-        payment_method="Razorpay",
+    payment_status="Paid",
+    payment_method="Razorpay",
 
-        payment_id=payload.razorpay_payment_id,
-        razorpay_order_id=payload.razorpay_order_id,
-        razorpay_signature=payload.razorpay_signature,
-    )
+    payment_id=payload.razorpay_payment_id,
+    razorpay_order_id=payload.razorpay_order_id,
+    razorpay_signature=payload.razorpay_signature,
+
+    pending_date=datetime.now(timezone.utc).isoformat(),
+)
 
     await db.orders.insert_one(order.model_dump())
 
@@ -382,6 +389,8 @@ async def create_order(payload: OrderCreate):
 
     total_quantity=total_quantity,
     total_amount=total_amount,
+
+    pending_date=datetime.now(timezone.utc).isoformat(),
 )
     doc = order.model_dump()
     await db.orders.insert_one(doc)
@@ -408,17 +417,56 @@ async def get_my_orders(phone: str):
     return orders
 
 @api_router.put("/orders/{order_id}", response_model=Order)
-async def update_order_status(order_id: str, payload: StatusUpdate, _: str = Depends(verify_admin)):
+async def update_order_status(
+    order_id: str,
+    payload: StatusUpdate,
+    _: str = Depends(verify_admin)
+):
     if payload.status not in ["Pending", "Packed", "Dispatched", "Delivered"]:
         raise HTTPException(status_code=400, detail="Invalid status")
+
+    now = datetime.now(timezone.utc).isoformat()
+
+    if payload.status == "Pending":
+        update_data = {
+            "status": "Pending",
+            "pending_date": now,
+            "packed_date": None,
+            "dispatched_date": None,
+            "delivered_date": None,
+        }
+
+    elif payload.status == "Packed":
+        update_data = {
+            "status": "Packed",
+            "packed_date": now,
+            "dispatched_date": None,
+            "delivered_date": None,
+        }
+
+    elif payload.status == "Dispatched":
+        update_data = {
+            "status": "Dispatched",
+            "dispatched_date": now,
+            "delivered_date": None,
+        }
+
+    else:  # Delivered
+        update_data = {
+            "status": "Delivered",
+            "delivered_date": now,
+        }
+
     result = await db.orders.find_one_and_update(
         {"id": order_id},
-        {"$set": {"status": payload.status}},
-        return_document=True,
+        {"$set": update_data},
+        return_document=ReturnDocument.AFTER,
         projection={"_id": 0},
     )
+
     if not result:
         raise HTTPException(status_code=404, detail="Order not found")
+
     return result
 
 @api_router.delete("/orders/{order_id}")
